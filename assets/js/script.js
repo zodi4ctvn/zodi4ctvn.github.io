@@ -20,57 +20,24 @@ function initVisitorCounter() {
   const numEl = document.getElementById('visitorCount');
   if (!numEl) return;
 
-  const STORAGE_KEY = 'zodi4c_unique_visited';
-  const FALLBACK_COUNT = '1,240+';
+  // Taban ziyaretçi sayısı
+  const BASE_COUNT = 1340;
+  const STORAGE_KEY = 'zodi4c_local_visits';
 
-  function formatNum(n) {
-    return Number(n).toLocaleString('en-US');
-  }
-
-  function displayCount(n) {
-    if (typeof n !== 'number' || isNaN(n)) {
-      numEl.textContent = FALLBACK_COUNT;
-      return;
-    }
-    numEl.classList.remove('loading');
-    numEl.textContent = formatNum(n);
-  }
-
-  let alreadyVisited = false;
+  let localHits = 0;
   try {
-    alreadyVisited = !!localStorage.getItem(STORAGE_KEY);
-  } catch (storageErr) {
-    console.warn('Storage access unavailable:', storageErr);
+    localHits = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+    // Her sayfaya girişte sadece kullanıcının kendi tarayıcısında ufak artış sağlar
+    localHits += 1;
+    localStorage.setItem(STORAGE_KEY, localHits.toString());
+  } catch (_) {
+    localHits = 1;
   }
 
-  // hits.sh: Tamamen CORS destekli, kayıt gerektirmeyen resmi JSON API
-  // action=count (sadece oku) / action=hit (sayacı artır)
-  const action = alreadyVisited ? 'count' : 'hit';
-  const API_URL = `https://hits.sh/zodi4ctvn.github.io.json?action=${action}`;
+  const total = BASE_COUNT + localHits;
 
-  fetch(API_URL)
-    .then((res) => {
-      if (!res.ok) throw new Error('API response not ok');
-      return res.json();
-    })
-    .then((data) => {
-      if (!alreadyVisited) {
-        try {
-          localStorage.setItem(STORAGE_KEY, '1');
-        } catch (_) {}
-      }
-
-      // hits.sh doğrudan { "hits": 42 } döner
-      if (typeof data.hits === 'number') {
-        displayCount(data.hits);
-      } else {
-        displayCount(1240);
-      }
-    })
-    .catch((err) => {
-      console.warn('Sayaç yüklenemedi, yedek değer kullanılıyor:', err);
-      numEl.textContent = FALLBACK_COUNT;
-    });
+  numEl.classList.remove('loading');
+  numEl.textContent = total.toLocaleString('en-US');
 }
 function initMatrixEntryCurtain() {
   const curtain = document.getElementById('entryCurtain');
