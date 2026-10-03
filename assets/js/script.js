@@ -43,25 +43,26 @@ function initVisitorCounter() {
     console.warn('Storage access unavailable:', storageErr);
   }
 
-  // Komarev SVG tabanlı GitHub ziyaretçi sayacı
-  const API_URL = 'https://komarev.com/ghpvc/?username=zodi4ctvn-site&color=blue';
+  // hits.sh: Tamamen CORS destekli, kayıt gerektirmeyen resmi JSON API
+  // action=count (sadece oku) / action=hit (sayacı artır)
+  const action = alreadyVisited ? 'count' : 'hit';
+  const API_URL = `https://hits.sh/zodi4ctvn.github.io.json?action=${action}`;
 
   fetch(API_URL)
     .then((res) => {
-      if (!res.ok) throw new Error('Komarev API response not ok');
-      return res.text();
+      if (!res.ok) throw new Error('API response not ok');
+      return res.json();
     })
-    .then((svgText) => {
+    .then((data) => {
       if (!alreadyVisited) {
         try {
           localStorage.setItem(STORAGE_KEY, '1');
         } catch (_) {}
       }
 
-      // SVG içindeki metin alanından rakamı ayıkla
-      const match = svgText.match(/<text[^>]*>(\d+)<\/text>\s*<\/g>/i) || svgText.match(/<text[^>]*>(\d+)<\/text>/i);
-      if (match && match[1]) {
-        displayCount(parseInt(match[1], 10));
+      // hits.sh doğrudan { "hits": 42 } döner
+      if (typeof data.hits === 'number') {
+        displayCount(data.hits);
       } else {
         displayCount(1240);
       }
