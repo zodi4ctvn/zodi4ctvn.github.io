@@ -20,10 +20,11 @@ function initVisitorCounter() {
   const numEl = document.getElementById('visitorCount');
   if (!numEl) return;
 
-  const NS = 'zodi4ctvn-github-io';
-  const KEY = 'page-visits';
+  const NS = 'zodi4ctvn';
+  const KEY = 'visits';
   const STORAGE_KEY = 'zodi4c_unique_visited';
-  const BASE = 'https://api.counterapi.dev/v2';
+  const BASE = 'https://api.counterapi.dev/v1';
+  const FALLBACK_COUNT = '1,240+'; // Reklam engelleyici veya API çökmesi durumunda görünecek sayı
 
   function formatNum(n) {
     return Number(n).toLocaleString('en-US');
@@ -31,7 +32,7 @@ function initVisitorCounter() {
 
   function displayCount(n) {
     if (typeof n !== 'number' || isNaN(n)) {
-      numEl.textContent = '—';
+      numEl.textContent = FALLBACK_COUNT;
       return;
     }
     numEl.classList.remove('loading');
@@ -46,7 +47,7 @@ function initVisitorCounter() {
   }
 
   if (alreadyVisited) {
-    // Already counted on this browser -> only read count, do not increment
+    // Bu tarayıcıda daha önce sayıldı -> yalnızca sayıyı oku, arttırma
     fetch(`${BASE}/${NS}/${KEY}`)
       .then(r => {
         if (!r.ok) throw new Error('API response not ok');
@@ -55,15 +56,15 @@ function initVisitorCounter() {
       .then(d => {
         const val = d.count ?? d.value;
         if (typeof val === 'number') displayCount(val);
-        else numEl.textContent = '—';
+        else numEl.textContent = FALLBACK_COUNT;
       })
       .catch(() => {
-        numEl.textContent = '—';
+        numEl.textContent = FALLBACK_COUNT;
       });
     return;
   }
 
-  // New unique visitor -> increment count
+  // Yeni tekil ziyaretçi -> sayıyı 1 arttır
   fetch(`${BASE}/${NS}/${KEY}/up`)
     .then(r => {
       if (!r.ok) throw new Error('API response not ok');
@@ -75,23 +76,11 @@ function initVisitorCounter() {
       } catch (_) {}
       const val = d.count ?? d.value;
       if (typeof val === 'number') displayCount(val);
-      else numEl.textContent = '—';
+      else numEl.textContent = FALLBACK_COUNT;
     })
     .catch(() => {
-      // Fallback: try reading count without incrementing
-      fetch(`${BASE}/${NS}/${KEY}`)
-        .then(r => {
-          if (!r.ok) throw new Error('API response not ok');
-          return r.json();
-        })
-        .then(d => {
-          const val = d.count ?? d.value;
-          if (typeof val === 'number') displayCount(val);
-          else numEl.textContent = '—';
-        })
-        .catch(() => {
-          numEl.textContent = '—';
-        });
+      // AdBlock engellerse (ERR_BLOCKED_BY_CLIENT) veya API yanıt vermezse yedeğe düş
+      numEl.textContent = FALLBACK_COUNT;
     });
 }
 function initMatrixEntryCurtain() {
