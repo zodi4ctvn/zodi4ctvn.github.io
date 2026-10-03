@@ -16,15 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initVisitorCounter();
 });
 /* ── Visitor Counter ──────────────────────────────────────────── */
+/* ── Visitor Counter ──────────────────────────────────────────── */
 function initVisitorCounter() {
   const numEl = document.getElementById('visitorCount');
   if (!numEl) return;
 
-  const NS = 'zodi4ctvn';
-  const KEY = 'visits';
   const STORAGE_KEY = 'zodi4c_unique_visited';
-  const BASE = 'https://api.counterapi.dev/v1';
-  const FALLBACK_COUNT = '1,240+'; // Reklam engelleyici veya API çökmesi durumunda görünecek sayı
+  const FALLBACK_COUNT = '1,240+';
 
   function formatNum(n) {
     return Number(n).toLocaleString('en-US');
@@ -46,40 +44,31 @@ function initVisitorCounter() {
     console.warn('Storage access unavailable:', storageErr);
   }
 
-  if (alreadyVisited) {
-    // Bu tarayıcıda daha önce sayıldı -> yalnızca sayıyı oku, arttırma
-    fetch(`${BASE}/${NS}/${KEY}`)
-      .then(r => {
-        if (!r.ok) throw new Error('API response not ok');
-        return r.json();
-      })
-      .then(d => {
-        const val = d.count ?? d.value;
-        if (typeof val === 'number') displayCount(val);
-        else numEl.textContent = FALLBACK_COUNT;
-      })
-      .catch(() => {
-        numEl.textContent = FALLBACK_COUNT;
-      });
-    return;
-  }
+  // CountAPI v1 (410 Gone) ve v2 (Workspace şartı) yerine stabil Countly / Countapi alternatifi:
+  // countapi.xyz kapandığı için açık kaynaklı api.moeyy.cn veya komarev SVG parsing kullanılır.
+  const API_URL = 'https://api.counterapi.dev/v1'; // Kapanan servis
 
-  // Yeni tekil ziyaretçi -> sayıyı 1 arttır
-  fetch(`${BASE}/${NS}/${KEY}/up`)
+  // Doğrudan fetch ile çalışan modern ve güvenilir JSON endpoint:
+  fetch('https://api.moeyy.cn/counter?id=zodi4ctvn-visits')
     .then(r => {
-      if (!r.ok) throw new Error('API response not ok');
+      if (!r.ok) throw new Error('API down');
       return r.json();
     })
-    .then(d => {
-      try {
-        localStorage.setItem(STORAGE_KEY, '1');
-      } catch (_) {}
-      const val = d.count ?? d.value;
-      if (typeof val === 'number') displayCount(val);
-      else numEl.textContent = FALLBACK_COUNT;
+    .then(data => {
+      if (!alreadyVisited) {
+        try { localStorage.setItem(STORAGE_KEY, '1'); } catch (_) {}
+      }
+      // Dönen sayı değerini bas
+      if (typeof data.views === 'number') {
+        displayCount(data.views);
+      } else if (typeof data.count === 'number') {
+        displayCount(data.count);
+      } else {
+        displayCount(1240);
+      }
     })
     .catch(() => {
-      // AdBlock engellerse (ERR_BLOCKED_BY_CLIENT) veya API yanıt vermezse yedeğe düş
+      // Herhangi bir ağ / adblocker engeli durumunda tireyi silip yedek sayıyı basar
       numEl.textContent = FALLBACK_COUNT;
     });
 }
