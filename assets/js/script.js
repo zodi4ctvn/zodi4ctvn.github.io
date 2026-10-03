@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initVisitorCounter();
 });
 /* ── Visitor Counter ──────────────────────────────────────────── */
-/* ── Visitor Counter ──────────────────────────────────────────── */
 function initVisitorCounter() {
   const numEl = document.getElementById('visitorCount');
   if (!numEl) return;
@@ -44,31 +43,31 @@ function initVisitorCounter() {
     console.warn('Storage access unavailable:', storageErr);
   }
 
-  // CountAPI v1 (410 Gone) ve v2 (Workspace şartı) yerine stabil Countly / Countapi alternatifi:
-  // countapi.xyz kapandığı için açık kaynaklı api.moeyy.cn veya komarev SVG parsing kullanılır.
-  const API_URL = 'https://api.counterapi.dev/v1'; // Kapanan servis
+  // Komarev SVG tabanlı GitHub ziyaretçi sayacı
+  const API_URL = 'https://komarev.com/ghpvc/?username=zodi4ctvn-site&color=blue';
 
-  // Doğrudan fetch ile çalışan modern ve güvenilir JSON endpoint:
-  fetch('https://api.moeyy.cn/counter?id=zodi4ctvn-visits')
-    .then(r => {
-      if (!r.ok) throw new Error('API down');
-      return r.json();
+  fetch(API_URL)
+    .then((res) => {
+      if (!res.ok) throw new Error('Komarev API response not ok');
+      return res.text();
     })
-    .then(data => {
+    .then((svgText) => {
       if (!alreadyVisited) {
-        try { localStorage.setItem(STORAGE_KEY, '1'); } catch (_) {}
+        try {
+          localStorage.setItem(STORAGE_KEY, '1');
+        } catch (_) {}
       }
-      // Dönen sayı değerini bas
-      if (typeof data.views === 'number') {
-        displayCount(data.views);
-      } else if (typeof data.count === 'number') {
-        displayCount(data.count);
+
+      // SVG içindeki metin alanından rakamı ayıkla
+      const match = svgText.match(/<text[^>]*>(\d+)<\/text>\s*<\/g>/i) || svgText.match(/<text[^>]*>(\d+)<\/text>/i);
+      if (match && match[1]) {
+        displayCount(parseInt(match[1], 10));
       } else {
         displayCount(1240);
       }
     })
-    .catch(() => {
-      // Herhangi bir ağ / adblocker engeli durumunda tireyi silip yedek sayıyı basar
+    .catch((err) => {
+      console.warn('Sayaç yüklenemedi, yedek değer kullanılıyor:', err);
       numEl.textContent = FALLBACK_COUNT;
     });
 }
