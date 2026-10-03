@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Matte Dark Background -->
+  <rect width="128" height="128" rx="28" fill="#090a0f"/>
+  <rect x="0.5" y="0.5" width="127" height="127" rx="27.5" stroke="#ffffff" stroke-opacity="0.08"/>
+
+  <!-- Clean, Perfectly Aligned Monogram Z -->
+  <!-- Top Bar -->
+  <polygon points="26,30 102,30 84,46 26,46" fill="#ffffff"/>
+
+  <!-- Diagonal Blade (Seamless 45deg cut) -->
+  <polygon points="102,30 102,44 44,98 26,98 26,84 84,30" fill="#e4e4e7"/>
+
+  <!-- Bottom Bar -->
+  <polygon points="44,82 102,82 102,98 26,98" fill="#ffffff"/>
+</svg>

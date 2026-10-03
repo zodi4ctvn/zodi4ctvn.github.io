@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 · Z O D I 4 C</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#121318">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      display: grid;
+      place-items: center;
+      background: radial-gradient(ellipse at 50% 40%, #1c1d24 0%, #121318 60%, #0b0c0f 100%);
+      color: #e8e8ec;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow: hidden;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 3px);
+      pointer-events: none;
+    }
+    main { text-align: center; padding: 2rem; }
+    h1 {
+      font-size: clamp(5rem, 18vw, 10rem);
+      font-weight: 700;
+      letter-spacing: .15em;
+      line-height: 1;
+      background: linear-gradient(180deg, #fff 0%, #6b6d78 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: glitch 3.5s infinite;
+    }
+    .term {
+      margin-top: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .9rem;
+      color: #8a8c96;
+    }
+    .term span { color: #e8e8ec; }
+    .caret {
+      display: inline-block;
+      width: .55em;
+      height: 1.1em;
+      vertical-align: -.2em;
+      background: #e8e8ec;
+      animation: blink 1s steps(1) infinite;
+    }
+    a {
+      display: inline-block;
+      margin-top: 2.2rem;
+      padding: .7rem 1.6rem;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(8px);
+      color: #e8e8ec;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      text-decoration: none;
+      transition: background .25s, border-color .25s, transform .25s;
+    }
+    a:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.3);
+      transform: translateY(-2px);
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes glitch {
+      0%, 92%, 100% { transform: none; text-shadow: none; }
+      93% { transform: translate(-3px, 1px); text-shadow: 3px 0 #ff2e63, -3px 0 #08d9d6; }
+      95% { transform: translate(3px, -1px); text-shadow: -3px 0 #ff2e63, 3px 0 #08d9d6; }
+      97% { transform: none; text-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>404</h1>
+    <p class="term">zodi4c@root:~$ <span>cd ./bu-sayfa</span><br>bash: no such file or directory <i class="caret"></i></p>
+    <a href="/" id="homeLink">cd ~</a>
+  </main>
+</body>
+</html>

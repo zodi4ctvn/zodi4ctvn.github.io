@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Z O D I 4 C</title>
+  <meta name="title" content="Z O D I 4 C">
+  <meta name="description"
+    content="Personal space of Zodi4c. Discord profiles, projects, skills, constellation map and terminal.">
+  <meta name="theme-color" content="#121318">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zodi4ctvn.github.io/">
+  <meta property="og:title" content="Z O D I 4 C">
+  <meta property="og:description" content="Digital presence • Takımyıldızı Projeleri • Terminal">
+  <meta property="og:image" content="https://cdn.discordapp.com/embed/avatars/0.png">
+  <link rel="canonical" href="https://zodi4ctvn.github.io/">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon.svg">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Z O D I 4 C">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="site-locked">
+  <div class="entry-curtain" id="entryCurtain" role="button" tabindex="0">
+    <div class="entry-minimal-wrap">
+      <span class="entry-prompt">click to enter</span>
+    </div>
+  </div>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="spotify-dynamic-ambient" id="dynamicAmbient"></div>
+  <canvas id="dna-canvas"></canvas>
+  <div class="background-backdrop">
+    <div class="discord-bg-banner" id="discordBgBanner"></div>
+    <div class="mist-layer"></div>
+    <div class="vignette"></div>
+  </div>
+  <audio id="bgAudio" src="assets/audio/music.mp3" loop preload="metadata"></audio>
+  <iframe id="ytAudioIframe" width="10" height="10" src=""
+    style="position: absolute; opacity: 0; pointer-events: none; border: none; width: 1px; height: 1px;"
+    allow="autoplay">
+  </iframe>
+  <main class="scene-center">
+    <h1 class="brand-title" id="decodeTitle" data-original="Z O D I 4 C" aria-label="ZODI4C">Z O D I 4 C</h1>
+    <div class="discord-activity-pill" id="discordPill">
+      <div class="pill-banner-slice" id="pillBannerSlice"></div>
+      <div class="pill-main-content">
+        <div class="avatar-holder">
+          <img id="discordAvatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
+          <span class="user-status-dot offline" id="userStatusDot"></span>
+        </div>
+        <div class="pill-info">
+          <div class="pill-username" id="pillUsername">zodi4ctvn</div>
+          <div class="pill-activity" id="pillActivity">
+            <span class="act-state" id="actState">Connecting to Lanyard...</span>
+          </div>
+        </div>
+        <div class="pill-badge" id="pillBadge" title="Verified">
+          <svg viewBox="0 0 24 24" class="badge-verified-svg" fill="currentColor">
+            <path
+              d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <nav class="horizontal-nav" aria-label="Sosyal Bağlantılar">
+      <a href="https://discord.com/users/1403455771563528252" target="_blank" rel="noopener noreferrer"
+        class="icon-nav-btn btn-discord" title="Discord (Ana Profil)">
+        <svg viewBox="0 0 24 24" class="nav-svg" fill="currentColor">
+          <path
+            d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.894a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
+        </svg>
+      </a>
+      <a href="https://guns.lol/zodi4c" target="_blank" rel="noopener noreferrer" class="icon-nav-btn btn-gunslol"
+        title="guns.lol/zodi4c">
+        <svg viewBox="0 0 100 100" class="nav-svg" fill="currentColor">
+          <g transform="translate(100, 0) scale(-1, 1) rotate(90 50 50)">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M72.5 4.8c1.8-1.8 4.7-1.8 6.5 0l16.2 16.2c1.8 1.8 1.8 4.7 0 6.5l-6.8 6.8c-.8.8-2 1-2.9.5l-3.2-1.8-4.5 4.5c.6 1.4.3 3.1-.9 4.3l-8.5 8.5c-1.3 1.3-3.2 1.5-4.7.7l-4.2 4.2 12.8 33.2c1.1 2.8-.2 6-2.9 7.1l-14.8 5.8c-2.8 1.1-6-.2-7.1-2.9L34.2 68.8l-12.5-4.8c-2.6-1-4.2-3.6-3.8-6.4l1.2-8.2-10.8-10.8c-2.4-2.4-2.4-6.3 0-8.7l12.8-12.8c2.4-2.4 6.3-2.4 8.7 0l9.8 9.8 28.5-28.5-2.2-4.2c-.6-1.1-.3-2.5.7-3.3l5.9-4.1zm-18.2 52.6l10.5 4.1c1.2.5 2.6.2 3.5-.7l8.2-8.2c.9-.9 1.2-2.3.7-3.5l-4.1-10.5-18.8 18.8z" />
+            <rect x="26" y="24" width="46" height="5" rx="2.5" transform="rotate(45 49 26.5)" fill="#16171c" />
+            <path d="M70 1.5c1.2-1.2 3.2-1.2 4.4 0l3.5 3.5c.8.8.8 2.1 0 2.9l-2.2 2.2-5.7-5.7 2.2-2.2c-.7-.7-1.5-.7-2.2-.7z" />
+          </g>
+        </svg>
+      </a>
+      <a href="https://www.youtube.com/@zodi4ctvn" target="_blank" rel="noopener noreferrer"
+        class="icon-nav-btn btn-youtube" title="YouTube: @zodi4ctvn">
+        <svg viewBox="0 0 24 24" class="nav-svg" fill="currentColor">
+          <path
+            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+        </svg>
+      </a>
+      <a href="https://open.spotify.com/user/dqjrnmq9o8prs687gr3y8j2pq?si=da574679f5d44e66" target="_blank"
+        rel="noopener noreferrer" class="icon-nav-btn btn-spotify" title="Spotify: Kurtulamadım">
+        <svg viewBox="0 0 24 24" class="nav-svg" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12c0 5.524 4.477 10 10 10s10-4.476 10-10c0-5.523-4.477-10-10-10zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.435-5.308-1.76-8.793-.963-.335.077-.67-.133-.746-.468-.077-.334.132-.67.467-.746 3.808-.87 7.076-.502 9.722 1.113.294.18.387.562.207.857zm1.225-2.723c-.226.367-.707.482-1.074.256-2.69-1.654-6.79-2.133-9.97-1.167-.413.125-.85-.11-.975-.523-.125-.413.11-.85.523-.975 3.632-1.102 8.156-.569 11.24 1.335.367.226.482.707.256 1.074zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71c-.494.15-1.018-.129-1.168-.623-.15-.495.129-1.018.624-1.168 3.532-1.073 9.404-.866 13.115 1.337.445.264.59.838.327 1.282-.264.444-.838.59-1.279.328z" />
+        </svg>
+      </a>
+      <a href="https://github.com/zodi4ctvn" target="_blank" rel="noopener noreferrer" class="icon-nav-btn btn-github"
+        title="GitHub">
+        <svg viewBox="0 0 24 24" class="nav-svg" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+        </svg>
+      </a>
+      <button class="icon-nav-btn btn-terminal" id="terminalToggleBtn" title="Terminali Aç / Kapat"
+        aria-label="Terminal">
+        <svg viewBox="0 0 24 24" class="nav-svg" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+      </button>
+      <a href="https://discord.com/users/1350881372104949903" target="_blank" rel="noopener noreferrer"
+        class="icon-nav-btn btn-discord" title="Discord (Yedek Profil)">
+        <svg viewBox="0 0 24 24" class="nav-svg" fill="currentColor">
+          <path
+            d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.894a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
+        </svg>
+      </a>
+    </nav>
+    <div class="visitor-counter-card" id="visitorCounterCard">
+      <span class="visitor-counter-icon">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </span>
+      <span class="visitor-counter-label">visitors</span>
+      <span class="visitor-counter-sep">·</span>
+      <span class="visitor-counter-num" id="visitorCount">—</span>
+    </div>
+    <div class="interactive-terminal hidden" id="terminalCard">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="dot close" id="termClose"></span>
+          <span class="dot min"></span>
+          <span class="dot max"></span>
+        </div>
+        <span class="terminal-title">zodi4c@system:~ (bash)</span>
+        <span class="terminal-hint">yardım için 'help'</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="term-line output">Zodi4c Interactive Shell v1.2.0</div>
+        <div class="term-line output text-dim">Tip: 'help' yazarak mevcut komutları görebilirsiniz.</div>
+      </div>
+      <div class="terminal-input-row">
+        <span class="prompt-sign">zodi4c@root:~$</span>
+        <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false"
+          placeholder="komut yaz...">
+      </div>
+    </div>
+  </main>
+
+  <div class="confirm-modal-overlay hidden" id="redirectModal">
+    <div class="confirm-modal-box">
+      <div class="confirm-header">
+        <span class="confirm-tag">redirect</span>
+        <span class="confirm-host" id="confirmTargetHost">discord.com</span>
+      </div>
+      <div class="confirm-url" id="confirmTargetUrl">https://...</div>
+      <div class="confirm-actions">
+        <button class="confirm-btn cancel" id="confirmCancelBtn">cancel</button>
+        <button class="confirm-btn proceed" id="confirmProceedBtn">continue ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-visualizer-container" id="bottomVisualizerWrap" aria-hidden="true">
+    <canvas id="bottomVisualizerCanvas"></canvas>
+  </div>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
+
