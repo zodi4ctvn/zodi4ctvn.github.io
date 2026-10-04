@@ -1670,9 +1670,9 @@ function initTypewriterBio() {
   if (!el) return;
 
   const phrases = [
-    'Full-Stack FiveM Geliştiricisi',
-    'Lua ve Sistem Mühendisi',
-    'Discord Bot Mimarı',
+    'Full-Stack FiveM Developer',
+    'Lua & Systems Engineer',
+    'Discord Bot Architect',
   ];
 
   let phraseIdx = 0;
