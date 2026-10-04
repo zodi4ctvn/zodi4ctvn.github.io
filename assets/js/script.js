@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMatrixEntryCurtain();
   initDecodeTitle();
   initCustomCursor();
+  initCursorTrail();
   initConstellationDnaCanvas();
   initLanyardActivity();
   initButtonAudioFeedback();
@@ -14,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initExternalLinkConfirm();
   initBottomEqualizerVisualizer();
   initVisitorCounter();
+  initStoredTheme();
+  initTechModal();
+  initTypewriterBio();
+  initDiscordProfileCard();
 });
 /* ── Visitor Counter ──────────────────────────────────────────── */
 function initVisitorCounter() {
@@ -224,23 +229,125 @@ function initConstellationDnaCanvas() {
     initTechDnaNodes();
   }
   const techItems = [
-    { name: 'Python', color: '#3776AB' },
-    { name: 'Lua', color: '#5c82ff' },
-    { name: 'JavaScript', color: '#F7DF1E' },
-    { name: 'Node.js', color: '#5FA04E' },
-    { name: 'Discord.js', color: '#5865F2' },
-    { name: 'MySQL', color: '#00758F' },
-    { name: 'HTML5', color: '#E34F26' },
-    { name: 'CSS3', color: '#1572B6' },
-    { name: 'GitHub', color: '#ffffff' },
-    { name: 'VS Code', color: '#007ACC' },
-    { name: 'FiveM', color: '#f59e0b' },
-    { name: 'QBCore', color: '#10b981' },
-    { name: 'Qbox', color: '#6366f1' },
-    { name: 'Gemini', color: '#38bdf8' },
-    { name: 'Antigravity', color: '#a855f7' },
-    { name: 'Claude', color: '#d97706' },
-    { name: 'Cursor', color: '#06b6d4' }
+    {
+      name: 'Python',
+      color: '#3776AB',
+      desc: 'Otomasyon, veri işleme, bot geliştirme ve backend scriptleri için birincil dil.',
+      tags: ['Backend', 'Scripting', 'Automation', 'APIs'],
+      projects: ['Discord Bot Hizmeti', 'Araçlar']
+    },
+    {
+      name: 'Lua',
+      color: '#5c82ff',
+      desc: 'FiveM istemci ve sunucu taraflı oyun mantığı, performanslı oyun eklentileri mimarisi.',
+      tags: ['FiveM', 'Game Dev', 'Scripts', 'High Performance'],
+      projects: ['Özel FiveM Scriptleri', 'QBCore / Qbox Entegrasyonları']
+    },
+    {
+      name: 'JavaScript',
+      color: '#F7DF1E',
+      desc: 'İnteraktif web deneyimleri, canvas animasyonları ve modern asenkron arayüzler.',
+      tags: ['Frontend', 'ES6+', 'Canvas API', 'DOM Engine'],
+      projects: ['zodi4ctvn.github.io Kişisel Hub', 'İnteraktif Web Uygulamaları']
+    },
+    {
+      name: 'Node.js',
+      color: '#5FA04E',
+      desc: 'Discord API bot motorları, REST API servisleri ve asenkron arka plan mimarisi.',
+      tags: ['Runtime', 'Backend', 'WebSockets', 'Discord Bot'],
+      projects: ['Lanyard Realtime Handler', 'Özel Discord Botları']
+    },
+    {
+      name: 'Discord.js',
+      color: '#5865F2',
+      desc: 'Gelişmiş komut sistemleri, etkinlik dinleyicileri ve Discord sunucu otomasyonu.',
+      tags: ['Discord API', 'Slash Commands', 'Bot Dev'],
+      projects: ['Topluluk Yönetim Botları', 'Webhook Entegrasyonları']
+    },
+    {
+      name: 'MySQL',
+      color: '#00758F',
+      desc: 'İlişkisel veritabanı tasarımı, FiveM sunucu tabloları ve veri kalıcılığı optimizasyonu.',
+      tags: ['Database', 'SQL Queries', 'Data Persistence'],
+      projects: ['FiveM Oyuncu Veritabanı Mimarisi']
+    },
+    {
+      name: 'HTML5',
+      color: '#E34F26',
+      desc: 'Semantik web yapısı, erişilebilirlik, modern meta etiketler ve SEO optimizasyonu.',
+      tags: ['Markup', 'SEO', 'Semantics', 'Modern Web'],
+      projects: ['Dijital Profil Sayfası', 'Responsive UI Tasarımları']
+    },
+    {
+      name: 'CSS3',
+      color: '#1572B6',
+      desc: 'Glassmorphism, 3D tilt efektleri, modern temalar ve akıcı mikro animasyonlar.',
+      tags: ['Styles', 'Animations', 'Glassmorphism', 'Cyberpunk'],
+      projects: ['Gelişmiş Takımyıldızı Arayüzü', 'Dinamik Tema Motoru']
+    },
+    {
+      name: 'GitHub',
+      color: '#ffffff',
+      desc: 'Versiyon kontrolü, GitHub Pages barındırma ve açık kaynaklı proje yönetimi.',
+      tags: ['Git', 'CI/CD', 'Open Source', 'Deploy'],
+      projects: ['zodi4ctvn.github.io Repository', 'Script Depoları']
+    },
+    {
+      name: 'VS Code',
+      color: '#007ACC',
+      desc: 'Özelleştirilmiş siber ortam, entegre terminal, git iş akışı ve ana geliştirme merkezi.',
+      tags: ['IDE', 'Workflow', 'Productivity', 'Dev Environment'],
+      projects: ['Günlük Kodlama & Script Geliştirme']
+    },
+    {
+      name: 'FiveM',
+      color: '#f59e0b',
+      desc: 'Özel GTA V roleplay sunucuları, optimize edilmiş istemci-sunucu senkronizasyonu.',
+      tags: ['Roleplay Engine', 'Game Modding', 'Client/Server Sync'],
+      projects: ['Özel Sunucu Mimarileri', 'HUD & UI Sistemleri']
+    },
+    {
+      name: 'QBCore',
+      color: '#10b981',
+      desc: 'FiveM için modüler ve kararlı roleplay altyapısı üzerinde sistem geliştirme.',
+      tags: ['Framework', 'Economy', 'Jobs', 'Modular Code'],
+      projects: ['QBCore Özel Envanter & Meslek Scriptleri']
+    },
+    {
+      name: 'Qbox',
+      color: '#6366f1',
+      desc: 'Modern, ox-lib tabanlı ve ultra yüksek performanslı FiveM framework mimarisi.',
+      tags: ['Next-Gen RP', 'Ox-Lib', 'High FPS', 'Clean Code'],
+      projects: ['Qbox Optimize Sunucu Paketleri']
+    },
+    {
+      name: 'Gemini',
+      color: '#38bdf8',
+      desc: 'Derin yapay zeka kodlama asistanı, karmaşık algoritma tasarımı ve refactoring.',
+      tags: ['AI Assistant', 'DeepMind', 'Code Architect'],
+      projects: ['Antigravity IDE Geliştirme Oturumu']
+    },
+    {
+      name: 'Antigravity',
+      color: '#a855f7',
+      desc: 'Yeni nesil ajan tabanlı pair programming ve tam teşekküllü geliştirme ortamı.',
+      tags: ['Agentic AI', 'Pair Programming', 'Workspace Engine'],
+      projects: ['zodi4ctvn Gelişmiş Özellik Güncellemeleri']
+    },
+    {
+      name: 'Claude',
+      color: '#d97706',
+      desc: 'Gelişmiş dil modelleriyle mimari analiz ve kod inceleme.',
+      tags: ['AI Model', 'Analysis', 'Architecture'],
+      projects: ['Kod Standartları & Analiz']
+    },
+    {
+      name: 'Cursor',
+      color: '#06b6d4',
+      desc: 'Yapay zeka güdümlü akıllı kod tamamlama ve hızlı refaktör aracı.',
+      tags: ['AI Code Editor', 'Speed', 'Refactoring'],
+      projects: ['Hızlı Prototip Geliştirme']
+    }
   ];
   class TechDnaParticle {
     constructor() {
@@ -248,32 +355,33 @@ function initConstellationDnaCanvas() {
     }
     spawn(initial = false) {
       this.tech = techItems[Math.floor(Math.random() * techItems.length)];
-      const margin = 50;
+      const margin = 60;
       this.x = margin + Math.random() * (width - margin * 2);
       this.y = margin + Math.random() * (height - margin * 2);
-      this.baseVx = (Math.random() - 0.5) * 0.22;
-      this.baseVy = (Math.random() - 0.5) * 0.22;
-      if (Math.abs(this.baseVx) < 0.06) this.baseVx = this.baseVx < 0 ? -0.1 : 0.1;
-      if (Math.abs(this.baseVy) < 0.06) this.baseVy = this.baseVy < 0 ? -0.1 : 0.1;
+      // Sakin ve yavas salinim
+      this.baseVx = (Math.random() - 0.5) * 0.08;
+      this.baseVy = (Math.random() - 0.5) * 0.08;
+      if (Math.abs(this.baseVx) < 0.025) this.baseVx = this.baseVx < 0 ? -0.04 : 0.04;
+      if (Math.abs(this.baseVy) < 0.025) this.baseVy = this.baseVy < 0 ? -0.04 : 0.04;
       this.vx = this.baseVx;
       this.vy = this.baseVy;
       this.angle = Math.random() * Math.PI * 2;
-      this.angleSpeed = 0.008 + Math.random() * 0.012;
-      this.life = initial ? Math.random() * 320 : 0;
-      this.maxLife = 450 + Math.random() * 250;
+      this.angleSpeed = 0.003 + Math.random() * 0.005;
+      this.life = initial ? Math.random() * 400 : 0;
+      this.maxLife = 600 + Math.random() * 400;
       this.alpha = 0;
     }
     update() {
       this.life++;
       this.angle += this.angleSpeed;
-      const sinOffset = Math.sin(this.angle) * 0.12;
-      const cosOffset = Math.cos(this.angle) * 0.12;
+      const sinOffset = Math.sin(this.angle) * 0.05;
+      const cosOffset = Math.cos(this.angle) * 0.05;
       this.x += this.vx + sinOffset;
       this.y += this.vy + cosOffset;
       const minX = 20;
-      const maxX = width - 95;
+      const maxX = width - 110;
       const minY = 25;
-      const maxY = height - 30;
+      const maxY = height - 35;
       if (this.x < minX) {
         this.x = minX;
         this.vx = Math.abs(this.vx) * 0.8;
@@ -289,25 +397,25 @@ function initConstellationDnaCanvas() {
         this.vy = -Math.abs(this.vy) * 0.8;
       }
       const progress = this.life / this.maxLife;
-      if (progress < 0.2) {
-        this.alpha = (progress / 0.2) * 0.75;
-      } else if (progress > 0.8) {
-        this.alpha = ((1 - progress) / 0.2) * 0.75;
+      if (progress < 0.15) {
+        this.alpha = (progress / 0.15) * 0.8;
+      } else if (progress > 0.85) {
+        this.alpha = ((1 - progress) / 0.15) * 0.8;
       } else {
-        this.alpha = 0.75;
+        this.alpha = 0.8;
       }
+      // Mouse tech balonlarini kacirmasin, aksine mouse yakindayken durulsun
       if (mouse.x !== null && mouse.y !== null) {
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 80) {
-          const force = (80 - dist) / 80;
-          this.vx -= (dx / dist) * force * 0.35;
-          this.vy -= (dy / dist) * force * 0.35;
+        if (dist < 60) {
+          this.vx *= 0.85;
+          this.vy *= 0.85;
         }
       }
-      this.vx += (this.baseVx - this.vx) * 0.04;
-      this.vy += (this.baseVy - this.vy) * 0.04;
+      this.vx += (this.baseVx - this.vx) * 0.02;
+      this.vy += (this.baseVy - this.vy) * 0.02;
       if (this.life >= this.maxLife) {
         this.spawn(false);
       }
@@ -315,22 +423,39 @@ function initConstellationDnaCanvas() {
     draw() {
       if (this.alpha <= 0.01) return;
       ctx.save();
-      ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
-      ctx.shadowBlur = 10;
+      // Hover glow: if mouse is close, increase glow
+      const isHovered = (mouse.x !== null && mouse.y !== null &&
+        mouse.x >= this.x - 25 && mouse.x <= this.x + 110 &&
+        mouse.y >= this.y - 25 && mouse.y <= this.y + 25);
+      const glowAlpha = isHovered ? Math.min(1, this.alpha + 0.2) : Math.max(0, Math.min(1, this.alpha));
+      ctx.globalAlpha = glowAlpha;
+      // Glow ring when hovered
+      if (isHovered) {
+        ctx.shadowBlur = 28;
+        ctx.shadowColor = this.tech.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 7.5, 0, Math.PI * 2);
+        ctx.strokeStyle = this.tech.color;
+        ctx.lineWidth = 1.2;
+        ctx.globalAlpha = 0.35;
+        ctx.stroke();
+        ctx.globalAlpha = glowAlpha;
+      }
+      ctx.shadowBlur = isHovered ? 22 : 10;
       ctx.shadowColor = this.tech.color;
       ctx.beginPath();
-      ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, isHovered ? 3.5 : 2.5, 0, Math.PI * 2);
       ctx.fillStyle = this.tech.color;
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(this.x, this.y, 4.5, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, isHovered ? 6.5 : 4.5, 0, Math.PI * 2);
       ctx.strokeStyle = this.tech.color;
-      ctx.lineWidth = 0.8;
+      ctx.lineWidth = isHovered ? 1.2 : 0.8;
       ctx.stroke();
-      ctx.font = '500 9.5px monospace';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-      ctx.shadowBlur = 4;
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
+      ctx.font = isHovered ? '600 10.5px monospace' : '500 9.5px monospace';
+      ctx.fillStyle = isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.85)';
+      ctx.shadowBlur = isHovered ? 10 : 4;
+      ctx.shadowColor = isHovered ? this.tech.color : 'rgba(255, 255, 255, 0.4)';
       ctx.fillText(this.tech.name, this.x + 8, this.y + 3);
       ctx.restore();
     }
@@ -390,9 +515,95 @@ function initConstellationDnaCanvas() {
         }
       }
     }
+
+    // ── Dinamik Yıldız Saati ──
+    {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      const ss = now.getSeconds();
+      const timeStr = `${hh}:${mm}`;
+      const cx = width - 70;
+      const cy = 32;
+      const pulse = 0.6 + Math.sin(performance.now() * 0.002) * 0.4;
+      const orbitPct = ss / 60; // seconds as orbit progress
+
+      ctx.save();
+
+      // Outer orbit ring (seconds progress)
+      ctx.beginPath();
+      ctx.arc(cx, cy, 14, -Math.PI / 2, -Math.PI / 2 + orbitPct * Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 255, 255, 0.28)`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Dim full orbit track
+      ctx.beginPath();
+      ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 255, 255, 0.07)`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      // Orbiting dot
+      const dotAngle = -Math.PI / 2 + orbitPct * Math.PI * 2;
+      const dotX = cx + Math.cos(dotAngle) * 14;
+      const dotY = cy + Math.sin(dotAngle) * 14;
+      ctx.beginPath();
+      ctx.arc(dotX, dotY, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${(0.5 + pulse * 0.5).toFixed(2)})`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = '#ffffff';
+      ctx.fill();
+
+      // Center star dot
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${pulse.toFixed(2)})`;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = '#ffffff';
+      ctx.fill();
+
+      // Time text
+      ctx.shadowBlur = 0;
+      ctx.font = '500 9px monospace';
+      ctx.fillStyle = `rgba(255, 255, 255, 0.55)`;
+      ctx.textAlign = 'center';
+      ctx.fillText(timeStr, cx, cy + 26);
+      ctx.textAlign = 'left';
+
+      ctx.restore();
+    }
+
     requestAnimationFrame(render);
   }
   render();
+
+  // Click on screen to inspect constellation tech nodes
+  window.addEventListener('click', (e) => {
+    // If Discord card modal is open, or click is within modal/pill/interactive UI, ignore
+    const dcModal = document.getElementById('discordCardModal');
+    if (dcModal && !dcModal.classList.contains('hidden')) {
+      return;
+    }
+    if (e.target.closest('a, button, input, .confirm-modal-box, .tech-modal-box, .interactive-terminal, .entry-curtain, .discord-card, .discord-card-overlay, .discord-activity-pill, #discordPill')) {
+      return;
+    }
+    const clickX = e.clientX;
+    const clickY = e.clientY;
+
+    for (let tNode of techDnaNodes) {
+      if (tNode.alpha > 0.1) {
+        const dx = clickX - tNode.x;
+        const dy = clickY - tNode.y;
+        // Rahat ve geniş tıklama alanı (baloncuk ve yazı çevresi)
+        if (dx >= -25 && dx <= 110 && dy >= -25 && dy <= 25) {
+          openTechModal(tNode.tech);
+          playUiClickSound(580, 'triangle', 0.08);
+          break;
+        }
+      }
+    }
+  });
 }
 function initLanyardActivity() {
   const PRIMARY_ID = '1403455771563528252';
@@ -403,12 +614,28 @@ function initLanyardActivity() {
   const bgBanner = document.getElementById('discordBgBanner');
   const pillBannerSlice = document.getElementById('pillBannerSlice');
   const dynamicAmbient = document.getElementById('dynamicAmbient');
+  const customBadge = document.getElementById('pillCustomBadge');
+  const spotifyProgressWrap = document.getElementById('spotifyProgressWrap');
+  const spotifyProgressBar = document.getElementById('spotifyProgressBar');
+  const spotifyCurrentTime = document.getElementById('spotifyCurrentTime');
+  const spotifyTotalTime = document.getElementById('spotifyTotalTime');
+  let spotifyInterval = null;
   let heartbeatTimer = null;
   let reconnectTimer = null;
   let socket = null;
 
+  function formatTime(ms) {
+    if (!ms || isNaN(ms)) return '0:00';
+    const totalSec = Math.floor(ms / 1000);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
   function applyLanyardData(data) {
     if (!data) return;
+    // Sync with Discord profile card modal
+    syncCardData(data);
     if (data.discord_user && data.discord_user.id && data.discord_user.avatar) {
       avatarEl.src = `https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png?size=128`;
     }
@@ -435,25 +662,57 @@ function initLanyardActivity() {
     const status = data.discord_status || 'offline';
     statusDot.className = `user-status-dot ${status}`;
 
+    // Reset Spotify timer if any
+    if (spotifyInterval) {
+      clearInterval(spotifyInterval);
+      spotifyInterval = null;
+    }
+
     if (data.listening_to_spotify && data.spotify) {
       const song = data.spotify.song;
       const artist = data.spotify.artist;
       const art = data.spotify.album_art_url;
       actStateEl.textContent = `Listening to ${song} - ${artist}`;
+
+      if (customBadge) {
+        customBadge.textContent = 'Spotify';
+        customBadge.className = 'pill-custom-badge badge-spotify';
+      }
+
+      if (spotifyProgressWrap && data.spotify.timestamps) {
+        spotifyProgressWrap.classList.remove('hidden');
+        const start = data.spotify.timestamps.start;
+        const end = data.spotify.timestamps.end;
+        const totalDuration = end - start;
+
+        const updateSpotifyBar = () => {
+          const now = Date.now();
+          const current = Math.max(0, Math.min(now - start, totalDuration));
+          const pct = Math.min(100, Math.max(0, (current / totalDuration) * 100));
+          if (spotifyProgressBar) {
+            spotifyProgressBar.style.setProperty('--spotify-progress-pct', `${pct}%`);
+          }
+          if (spotifyCurrentTime) spotifyCurrentTime.textContent = formatTime(current);
+          if (spotifyTotalTime) spotifyTotalTime.textContent = formatTime(totalDuration);
+        };
+        updateSpotifyBar();
+        spotifyInterval = setInterval(updateSpotifyBar, 1000);
+      }
+
       if (art) {
         extractDominantColor(art, (color) => {
           if (dynamicAmbient) {
-            dynamicAmbient.style.background = `radial-gradient(circle at 50% 50%, rgba(${color.r}, ${color.g}, ${color.b}, 0.4) 0%, transparent 70%)`;
-            dynamicAmbient.style.opacity = '0.6';
+            dynamicAmbient.style.background = `radial-gradient(circle at 50% 50%, rgba(${color.r}, ${color.g}, ${color.b}, 0.45) 0%, transparent 70%)`;
+            dynamicAmbient.style.opacity = '0.7';
           }
           document.documentElement.style.setProperty('--spotify-accent', `rgba(${color.r}, ${color.g}, ${color.b}, 0.45)`);
         });
       }
     } else {
+      if (spotifyProgressWrap) spotifyProgressWrap.classList.add('hidden');
+
       if (data.activities && data.activities.length > 0) {
-        // Exclude Spotify activity if already handled or non-spotify
         const nonSpotifyActivities = data.activities.filter(a => a.id !== 'spotify:1');
-        // Prioritize non-custom activity first (gaming, listening, streaming)
         const mainAct = nonSpotifyActivities.find(a => a.type !== 4) || nonSpotifyActivities[0];
 
         if (mainAct) {
@@ -461,23 +720,33 @@ function initLanyardActivity() {
           const details = mainAct.details ? ` - ${mainAct.details}` : '';
           const state = mainAct.state ? ` (${mainAct.state})` : '';
 
+          if (customBadge) {
+            if (name.toLowerCase().includes('visual studio code') || name.toLowerCase().includes('code')) {
+              customBadge.textContent = 'VS Code';
+              customBadge.className = 'pill-custom-badge badge-vscode';
+            } else {
+              customBadge.textContent = name;
+              customBadge.className = 'pill-custom-badge';
+            }
+          }
+
           switch (mainAct.type) {
-            case 0: // Playing
+            case 0:
               actStateEl.textContent = `Playing ${name}${details}`;
               break;
-            case 1: // Streaming
+            case 1:
               actStateEl.textContent = `Streaming ${name}${details}`;
               break;
-            case 2: // Listening
+            case 2:
               actStateEl.textContent = `Listening to ${name}${details}`;
               break;
-            case 3: // Watching
+            case 3:
               actStateEl.textContent = `Watching ${name}${details}`;
               break;
-            case 4: // Custom Status
+            case 4:
               actStateEl.textContent = mainAct.state || mainAct.name || 'Active';
               break;
-            case 5: // Competing
+            case 5:
               actStateEl.textContent = `Competing in ${name}${details}`;
               break;
             default:
@@ -485,13 +754,17 @@ function initLanyardActivity() {
               break;
           }
         } else if (status !== 'offline') {
+          if (customBadge) customBadge.className = 'pill-custom-badge hidden';
           actStateEl.textContent = 'Active on Discord';
         } else {
+          if (customBadge) customBadge.className = 'pill-custom-badge hidden';
           actStateEl.textContent = 'Offline / Sleeping';
         }
       } else if (status !== 'offline') {
+        if (customBadge) customBadge.className = 'pill-custom-badge hidden';
         actStateEl.textContent = 'Active on Discord';
       } else {
+        if (customBadge) customBadge.className = 'pill-custom-badge hidden';
         actStateEl.textContent = 'Offline / Sleeping';
       }
     }
@@ -507,7 +780,7 @@ function initLanyardActivity() {
 
   function connectSocket() {
     if (socket) {
-      try { socket.close(); } catch (_) {}
+      try { socket.close(); } catch (_) { }
     }
     clearInterval(heartbeatTimer);
     clearTimeout(reconnectTimer);
@@ -551,7 +824,7 @@ function initLanyardActivity() {
       };
 
       socket.onerror = () => {
-        try { socket.close(); } catch (_) {}
+        try { socket.close(); } catch (_) { }
       };
     } catch (err) {
       console.warn('Lanyard socket connection skipped:', err);
@@ -613,14 +886,23 @@ function initInteractiveTerminal() {
   const termBody = document.getElementById('terminalBody');
   const termInput = document.getElementById('termInput');
   if (!toggleBtn || !terminalCard) return;
-  function toggleTerminal() {
+  function toggleTerminal(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     terminalCard.classList.toggle('hidden');
     if (!terminalCard.classList.contains('hidden') && termInput) {
       setTimeout(() => termInput.focus(), 150);
     }
   }
   toggleBtn.addEventListener('click', toggleTerminal);
-  if (termClose) termClose.addEventListener('click', () => terminalCard.classList.add('hidden'));
+  if (termClose) {
+    termClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      terminalCard.classList.add('hidden');
+    });
+  }
   const commands = {
     help: () => [
       'Kullanılabilir Komutlar:',
@@ -629,11 +911,41 @@ function initInteractiveTerminal() {
       '  cat [dosya]  - Dosya içeriğini oku (örn: cat about.txt)',
       '  stars        - Takımyıldızı projelerini listele',
       '  skills       - Yazılım & teknik yetenekler',
+      '  theme [mod]  - Siber temayı değiştir (matrix, bloodmoon, synthwave, void/default)',
       '  clear        - Terminal ekranını temizle',
       '  repo         - GitHub kaynak koduna git',
       '  date         - Sistem tarih ve saati',
       '  exit         - Terminali kapat'
     ],
+    theme: (args) => {
+      const mode = (args[0] || '').toLowerCase();
+      const themes = ['matrix', 'bloodmoon', 'synthwave', 'void', 'default'];
+      if (!mode) {
+        return [
+          'Mevcut Temalar: matrix, bloodmoon, synthwave, void (varsayılan)',
+          'Kullanım: theme <isim>  (Örn: theme matrix)'
+        ];
+      }
+      document.body.classList.remove('theme-matrix', 'theme-bloodmoon', 'theme-synthwave');
+      if (mode === 'matrix') {
+        document.body.classList.add('theme-matrix');
+        try { localStorage.setItem('zodi4c_theme', 'matrix'); } catch (_) { }
+        return ['[OK] Tema "matrix" (Emerald Rain) olarak ayarlandı.'];
+      } else if (mode === 'bloodmoon' || mode === 'crimson') {
+        document.body.classList.add('theme-bloodmoon');
+        try { localStorage.setItem('zodi4c_theme', 'bloodmoon'); } catch (_) { }
+        return ['[OK] Tema "bloodmoon" (Crimson Cyber) olarak ayarlandı.'];
+      } else if (mode === 'synthwave' || mode === 'violet') {
+        document.body.classList.add('theme-synthwave');
+        try { localStorage.setItem('zodi4c_theme', 'synthwave'); } catch (_) { }
+        return ['[OK] Tema "synthwave" (Neon Violet) olarak ayarlandı.'];
+      } else if (mode === 'void' || mode === 'default' || mode === 'reset') {
+        try { localStorage.removeItem('zodi4c_theme'); } catch (_) { }
+        return ['[OK] Varsayılan Void / Cyber Cyan temasına dönüldü.'];
+      } else {
+        return [`Bilinmeyen tema: '${mode}'. Geçerli olanlar: matrix, bloodmoon, synthwave, void`];
+      }
+    },
     whoami: () => [
       'Zodi4c (zodi4ctvn)',
       'Rol: Digital Artisan & Web Architect',
@@ -678,11 +990,11 @@ function initInteractiveTerminal() {
     },
     skills: () => [
       'Yetenekler:',
-      '  [■■■■■■■■■□] JavaScript / TypeScript (Web & Bots)',
-      '  [■■■■■■■■■□] Lua & FiveM (QBCore / Qbox)',
-      '  [■■■■■■■■□□] Node.js & Discord API Engine',
-      '  [■■■■■■■□□□] Python Scripting & Automation',
-      '  [■■■■■■■■■□] Modern CSS & Canvas Art'
+      '  > JavaScript / TypeScript  [======....] 60%',
+      '  > Lua / FiveM (QBCore/Qbox) [==========] 100%',
+      '  > Node.js / Discord API     [=========.] 90%',
+      '  > Python Scripting           [========..] 80%',
+      '  > Modern CSS / Canvas Art   [=======...] 70%'
     ],
     clear: () => {
       termBody.innerHTML = '';
@@ -1209,35 +1521,36 @@ function initExternalLinkConfirm() {
 
   let pendingHref = '';
 
-  const externalLinks = document.querySelectorAll('.horizontal-nav a, a[target="_blank"]');
-  externalLinks.forEach((link) => {
-    link.addEventListener('click', (e) => {
-      const href = link.getAttribute('href');
-      if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-        e.preventDefault();
-        e.stopPropagation();
+  // Intercept all external link clicks explicitly
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="http://"], a[href^="https://"]');
+    if (!link) return;
 
-        // Trigger dynamic spring pulse on the clicked icon button
-        link.classList.remove('btn-clicked');
-        // Force reflow
-        void link.offsetWidth;
-        link.classList.add('btn-clicked');
-        setTimeout(() => link.classList.remove('btn-clicked'), 480);
+    const href = link.getAttribute('href');
+    if (href) {
+      e.preventDefault();
+      e.stopPropagation();
 
-        pendingHref = href;
-        targetUrlEl.textContent = href;
-        try {
-          const urlObj = new URL(href);
-          if (targetHostEl) targetHostEl.textContent = urlObj.hostname.replace('www.', '');
-        } catch (_) {
-          if (targetHostEl) targetHostEl.textContent = 'external';
-        }
-        modal.classList.remove('hidden');
+      // Trigger dynamic spring pulse on the clicked icon button
+      link.classList.remove('btn-clicked');
+      void link.offsetWidth;
+      link.classList.add('btn-clicked');
+      setTimeout(() => link.classList.remove('btn-clicked'), 480);
+
+      pendingHref = href;
+      targetUrlEl.textContent = href;
+      try {
+        const urlObj = new URL(href);
+        if (targetHostEl) targetHostEl.textContent = urlObj.hostname.replace('www.', '');
+      } catch (_) {
+        if (targetHostEl) targetHostEl.textContent = 'external';
       }
-    });
-  });
+      modal.classList.remove('hidden');
+    }
+  }, true);
 
-  proceedBtn.addEventListener('click', () => {
+  proceedBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (pendingHref) {
       window.open(pendingHref, '_blank', 'noopener,noreferrer');
       pendingHref = '';
@@ -1245,7 +1558,8 @@ function initExternalLinkConfirm() {
     modal.classList.add('hidden');
   });
 
-  cancelBtn.addEventListener('click', () => {
+  cancelBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     pendingHref = '';
     modal.classList.add('hidden');
   });
@@ -1271,4 +1585,414 @@ function initExternalLinkConfirm() {
       }
     }
   });
+}
+
+/* ── Stored Theme Initializer ── */
+function initStoredTheme() {
+  try {
+    const saved = localStorage.getItem('zodi4c_theme');
+    if (saved && ['matrix', 'bloodmoon', 'synthwave'].includes(saved)) {
+      document.body.classList.add(`theme-matrix` === `theme-${saved}` ? `theme-${saved}` : `theme-${saved}`);
+    }
+  } catch (_) { }
+}
+
+/* ── Tech / Node Details Modal ── */
+let currentTechModal = null;
+function openTechModal(tech) {
+  if (!tech) return;
+  const modal = document.getElementById('techModal');
+  const dot = document.getElementById('techModalDot');
+  const title = document.getElementById('techModalTitle');
+  const desc = document.getElementById('techModalDesc');
+  const tagsWrap = document.getElementById('techModalTags');
+  const projectsWrap = document.getElementById('techModalProjects');
+
+  if (!modal) return;
+
+  if (dot) {
+    dot.style.backgroundColor = tech.color || '#38bdf8';
+    dot.style.boxShadow = `0 0 12px ${tech.color || '#38bdf8'}`;
+  }
+  if (title) title.textContent = tech.name || 'Tech Node';
+  if (desc) desc.textContent = tech.desc || 'Bu teknoloji takımyıldızında aktif olarak kullanılan bileşenlerden biridir.';
+
+  if (tagsWrap) {
+    tagsWrap.innerHTML = '';
+    const tags = tech.tags || ['Core', 'Active'];
+    tags.forEach(t => {
+      const sp = document.createElement('span');
+      sp.className = 'tech-tag';
+      sp.textContent = `#${t}`;
+      tagsWrap.appendChild(sp);
+    });
+  }
+
+  if (projectsWrap) {
+    projectsWrap.innerHTML = '';
+    const projects = tech.projects || ['Kişisel Altyapı'];
+    projects.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'tech-project-item';
+      item.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none" style="margin-right:6px;flex-shrink:0;vertical-align:middle"><polygon points="0,1 9,5 0,9" fill="currentColor" opacity="0.85"/></svg><span>${p}</span>`;
+      projectsWrap.appendChild(item);
+    });
+  }
+
+  modal.classList.remove('hidden');
+}
+
+function initTechModal() {
+  const modal = document.getElementById('techModal');
+  const closeBtn = document.getElementById('techModalClose');
+  if (!modal) return;
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      modal.classList.add('hidden');
+    }
+  });
+}
+
+/* ── Typewriter Bio ─────────────────────────────────────────── */
+function initTypewriterBio() {
+  const el = document.getElementById('twText');
+  if (!el) return;
+
+  const phrases = [
+    'Full-Stack FiveM Geliştiricisi',
+    'Lua ve Sistem Mühendisi',
+    'Discord Bot Mimarı',
+  ];
+
+  let phraseIdx = 0;
+  let charIdx = 0;
+  let isDeleting = false;
+  let pauseTimer = null;
+
+  function tick() {
+    const current = phrases[phraseIdx];
+    if (isDeleting) {
+      charIdx--;
+      el.textContent = current.slice(0, charIdx);
+      if (charIdx <= 0) {
+        isDeleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        pauseTimer = setTimeout(tick, 420);
+        return;
+      }
+      pauseTimer = setTimeout(tick, 42);
+    } else {
+      charIdx++;
+      el.textContent = current.slice(0, charIdx);
+      if (charIdx >= current.length) {
+        isDeleting = true;
+        pauseTimer = setTimeout(tick, 1800);
+        return;
+      }
+      pauseTimer = setTimeout(tick, 78);
+    }
+  }
+
+  // Start after site enter animation
+  const startDelay = document.body.classList.contains('site-entered') ? 500 : 1800;
+  setTimeout(tick, startDelay);
+}
+
+/* ── Cursor Trail ───────────────────────────────────────────── */
+function initCursorTrail() {
+  // Trail color follows Spotify accent or defaults to white
+  let trailColor = 'rgba(255, 255, 255, 0.6)';
+  let lastX = -999, lastY = -999;
+  let frameCount = 0;
+
+  // Trail color follows active THEME, then Spotify, then defaults to white
+  function getTrailColor() {
+    const body = document.body;
+    // Theme takes priority
+    if (body.classList.contains('theme-matrix')) return 'rgba(34, 197, 94, 0.75)';
+    if (body.classList.contains('theme-bloodmoon')) return 'rgba(220, 38, 38, 0.75)';
+    if (body.classList.contains('theme-synthwave')) return 'rgba(168, 85, 247, 0.75)';
+    // Then Spotify album color
+    const accent = getComputedStyle(document.documentElement)
+      .getPropertyValue('--spotify-accent').trim();
+    if (accent && accent !== 'rgba(255, 255, 255, 0.15)') {
+      const match = accent.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (match) return `rgba(${match[1]}, ${match[2]}, ${match[3]}, 0.65)`;
+    }
+    return 'rgba(255, 255, 255, 0.5)';
+  }
+
+  window.addEventListener('mousemove', (e) => {
+    frameCount++;
+    // Spawn a trail dot every 2 frames for smooth trail
+    if (frameCount % 2 !== 0) return;
+
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 6) return; // skip if barely moved
+
+    lastX = e.clientX;
+    lastY = e.clientY;
+
+    trailColor = getTrailColor();
+
+    const dot = document.createElement('div');
+    dot.className = 'cursor-trail-dot';
+    dot.style.left = `${e.clientX}px`;
+    dot.style.top = `${e.clientY}px`;
+    dot.style.background = trailColor;
+    dot.style.boxShadow = `0 0 6px ${trailColor}`;
+    // Vary size slightly based on speed
+    const speedScale = Math.min(1.8, 0.6 + dist * 0.04);
+    dot.style.width = `${Math.round(5 * speedScale)}px`;
+    dot.style.height = `${Math.round(5 * speedScale)}px`;
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 560);
+  }, { passive: true });
+}
+
+/* ── Discord Profile Card ───────────────────────────────────── */
+// Global store for Lanyard data to populate the card
+window._lanyardCache = null;
+window._lanyardRestData = null; // REST API provides premium_type, decoration, etc.
+
+// Fetch Lanyard REST API once for richer badge data
+function fetchLanyardRest() {
+  const USER_ID = '1403455771563528252';
+  fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`)
+    .then(r => r.json())
+    .then(json => {
+      if (json.success && json.data) {
+        window._lanyardRestData = json.data;
+        console.log('[Zodi4c REST] premium_type:', json.data.premium_type,
+          '| flags:', json.data.discord_user?.public_flags,
+          '| decoration:', json.data.discord_user?.avatar_decoration_data);
+        // Re-render card if it's open
+        const overlay = document.getElementById('discordCardModal');
+        if (overlay && !overlay.classList.contains('hidden')) {
+          syncCardData(window._lanyardCache || json.data);
+        }
+      }
+    })
+    .catch(() => { }); // Silent fail, WS data is still used
+}
+
+function initDiscordProfileCard() {
+  const pill = document.getElementById('discordPill');
+  const overlay = document.getElementById('discordCardModal');
+  const card = document.getElementById('discordCard');
+  const closeBtn = document.getElementById('dcClose');
+  if (!pill || !overlay) return;
+
+  // Fetch REST data early so badges are ready
+  fetchLanyardRest();
+
+  function resetCardTilt() {
+    if (!card) return;
+    card.classList.add('is-resetting');
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    card.style.boxShadow = '0 32px 72px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04)';
+  }
+
+  function openCard() {
+    // Merge WS + REST data before syncing
+    if (window._lanyardCache) syncCardData(window._lanyardCache);
+    resetCardTilt();
+    overlay.classList.remove('hidden');
+    playUiClickSound(520, 'sine', 0.06);
+  }
+
+  function closeCard() {
+    resetCardTilt();
+    overlay.classList.add('hidden');
+  }
+
+  pill.addEventListener('click', (e) => {
+    // Don't open if clicking inside pill interactive children
+    if (e.target.closest('a, button')) return;
+    openCard();
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeCard();
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeCard();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeCard();
+  });
+
+  // ── 3D Tilt Effect on Discord Card ──────────────────────────
+  if (card) {
+    let tiltRaf = null;
+
+    function handleMouseMove(e) {
+      if (overlay.classList.contains('hidden')) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Mouse card sınırları içinde mi?
+      const isInside = x >= -40 && x <= rect.width + 40 && y >= -40 && y <= rect.height + 40;
+      if (!isInside) {
+        resetCardTilt();
+        return;
+      }
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // -1 ile +1 arası normalize katsayı
+      const normX = Math.max(-1, Math.min(1, (x - centerX) / centerX));
+      const normY = Math.max(-1, Math.min(1, (y - centerY) / centerY));
+
+      // Belirgin ve akıcı 3D açı (15 derece)
+      const maxAngle = 15;
+      const rotateX = (-normY * maxAngle).toFixed(2);
+      const rotateY = (normX * maxAngle).toFixed(2);
+
+      if (tiltRaf) cancelAnimationFrame(tiltRaf);
+      tiltRaf = requestAnimationFrame(() => {
+        card.classList.remove('is-resetting');
+        card.classList.add('is-tilted');
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+        // Dinamik derin gölge
+        const shadowX = (-normX * 30).toFixed(1);
+        const shadowY = (-normY * 30 + 35).toFixed(1);
+        card.style.boxShadow = `${shadowX}px ${shadowY}px 70px rgba(0,0,0,0.9), 0 0 30px rgba(88,101,242,0.22), 0 0 0 1px rgba(255,255,255,0.1)`;
+      });
+    }
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      resetCardTilt();
+    });
+  }
+}
+
+function syncCardData(data) {
+  if (!data) return;
+  window._lanyardCache = data;
+
+  const dcAvatar = document.getElementById('dcAvatar');
+  const dcBanner = document.getElementById('dcBanner');
+  const dcDisplayName = document.getElementById('dcDisplayName');
+  const dcUsername = document.getElementById('dcUsername');
+  const dcStatusDot = document.getElementById('dcStatusDot');
+  const dcActName = document.getElementById('dcActName');
+  const dcActDetail = document.getElementById('dcActDetail');
+  const dcActIcon = document.getElementById('dcActIcon');
+  const dcBadgesEl = document.getElementById('dcBadges');
+
+  if (data.discord_user) {
+    const u = data.discord_user;
+    if (u.avatar && dcAvatar) {
+      dcAvatar.src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=256`;
+    }
+    if (dcDisplayName) {
+      dcDisplayName.textContent = u.global_name || u.username || 'zodi4ctvn';
+    }
+    if (dcUsername) {
+      dcUsername.textContent = `@${u.username || 'zodi4ctvn'}`;
+    }
+    // Banner — full cover, no blur
+    if (dcBanner) {
+      dcBanner.style.filter = '';
+      dcBanner.style.backgroundRepeat = 'no-repeat';
+      if (u.banner) {
+        const ext = u.banner.startsWith('a_') ? 'gif' : 'png';
+        dcBanner.style.backgroundImage = `url('https://cdn.discordapp.com/banners/${u.id}/${u.banner}.${ext}?size=600')`;
+        dcBanner.style.backgroundSize = 'cover';
+        dcBanner.style.backgroundPosition = 'center top';
+      } else if (u.avatar) {
+        // Avatar zoomed as banner fallback, cover
+        dcBanner.style.backgroundImage = `url('https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=512')`;
+        dcBanner.style.backgroundSize = 'cover';
+        dcBanner.style.backgroundPosition = 'center top';
+      }
+    }
+
+    // ── Badges ──────────────────────────────────────────────────
+    if (dcBadgesEl) {
+      dcBadgesEl.innerHTML = '';
+      // Kullanıcının belirttiği Discord rozetleri (assets/discord/*.png)
+      const USER_BADGES = [
+        //{ file: 'balance.png',           tip: 'HypeSquad Balance' },
+        //{ file: 'nitro.png',             tip: 'Discord Nitro' },
+        { file: 'developer.png', tip: 'Active Developer' },
+        //{ file: 'partner.png', tip: 'Discord Partner' },
+        //{ file: 'staff.png', tip: 'Discord Staff' },
+        { file: 'boosting_9.png', tip: 'Server Booster' },
+        { file: 'early_supporter.png', tip: 'Early Supporter' },
+        { file: 'hypesquad_events.png', tip: 'HypeSquad Events' },
+        //{ file: 'bughunter_2.png', tip: 'Bug Hunter Lv.2' },
+        //{ file: 'quest.png',             tip: 'Quest Completed' },
+        //{ file: 'orbs.png',              tip: 'Quest Orbs' },
+        //{ file: 'nitroopal.png',         tip: 'Discord Nitro (Opal)' },
+      ];
+
+      USER_BADGES.forEach(({ file, tip }) => {
+        const el = document.createElement('div');
+        el.className = 'dc-badge';
+        el.setAttribute('data-tip', tip);
+        el.innerHTML = `<img src="assets/discord/${file}" alt="${tip}" loading="lazy">`;
+        dcBadgesEl.appendChild(el);
+      });
+    }
+  }
+
+  const status = data.discord_status || 'offline';
+  if (dcStatusDot) dcStatusDot.className = `dc-status-dot ${status}`;
+
+  // Activity
+  if (data.listening_to_spotify && data.spotify) {
+    const sp = data.spotify;
+    if (dcActName) dcActName.textContent = sp.song || 'Spotify';
+    if (dcActDetail) dcActDetail.textContent = sp.artist ? `by ${sp.artist}` : '';
+    if (dcActIcon && sp.album_art_url) {
+      dcActIcon.innerHTML = `<img src="${sp.album_art_url}" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">`;
+    }
+  } else if (data.activities && data.activities.length > 0) {
+    const act = data.activities.find(a => a.type !== 4) || data.activities[0];
+    if (act) {
+      if (dcActName) dcActName.textContent = act.name || 'Active';
+      if (dcActDetail) dcActDetail.textContent = act.details || act.state || '';
+      if (dcActIcon) {
+        if (act.application_id && act.assets && act.assets.large_image) {
+          const imgKey = act.assets.large_image;
+          if (imgKey.startsWith('mp:')) {
+            dcActIcon.innerHTML = `<img src="https://media.discordapp.net/${imgKey.slice(3)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">`;
+          } else {
+            dcActIcon.innerHTML = `<img src="https://cdn.discordapp.com/app-assets/${act.application_id}/${imgKey}.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">`;
+          }
+        } else {
+          dcActIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><circle cx="12" cy="12" r="10" opacity="0.2"/><circle cx="12" cy="12" r="4"/></svg>`;
+        }
+      }
+    }
+  } else {
+    const statusLabels = { online: 'Online', idle: 'Away', dnd: 'Do Not Disturb', offline: 'Offline' };
+    if (dcActName) dcActName.textContent = statusLabels[status] || 'Offline';
+    if (dcActDetail) dcActDetail.textContent = '';
+    if (dcActIcon) dcActIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><circle cx="12" cy="12" r="10" opacity="0.2"/><circle cx="12" cy="12" r="4"/></svg>`;
+  }
 }
