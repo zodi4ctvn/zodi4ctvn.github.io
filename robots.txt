@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zodi4ctvn.github.io/sitemap.xml

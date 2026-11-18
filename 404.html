@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 · Z O D I 4 C</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#121318">
+  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1403455771563528252/45b51aba1249e7a47dd67075faa3e03d.png?size=128">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; width: 100%; }
+    
+    body {
+      display: grid;
+      place-items: center;
+      background: radial-gradient(ellipse at 50% 40%, #1c1d24 0%, #121318 60%, #0b0c0f 100%);
+      color: #e8e8ec;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow: hidden;
+      transition: background 0.5s ease;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    main {
+      position: relative;
+      z-index: 20;
+      text-align: center;
+      padding: 2.5rem 1.8rem;
+      max-width: 580px;
+      background: rgba(20, 21, 26, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transition: all 0.4s ease;
+    }
+
+    h1 {
+      font-size: clamp(5.5rem, 18vw, 9.5rem);
+      font-weight: 700;
+      letter-spacing: .12em;
+      line-height: 1;
+      background: linear-gradient(180deg, #fff 0%, #6b6d78 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: glitch 3.5s infinite;
+      transition: all 0.4s ease;
+    }
+
+    .term {
+      margin-top: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .92rem;
+      color: #8a8c96;
+      line-height: 1.6;
+      transition: color 0.3s ease;
+    }
+
+    .term span { color: #e8e8ec; }
+
+    .caret {
+      display: inline-block;
+      width: .55em;
+      height: 1.1em;
+      vertical-align: -.2em;
+      background: #e8e8ec;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2.2rem;
+      padding: .75rem 1.8rem;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(8px);
+      color: #e8e8ec;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .88rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .25s ease;
+    }
+
+    .home-btn:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.35);
+      transform: translateY(-2px);
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes glitch {
+      0%, 92%, 100% { transform: none; text-shadow: none; }
+      93% { transform: translate(-3px, 1px); text-shadow: 3px 0 #ff2e63, -3px 0 #08d9d6; }
+      95% { transform: translate(3px, -1px); text-shadow: -3px 0 #ff2e63, 3px 0 #08d9d6; }
+      97% { transform: none; text-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>404</h1>
+    <p class="term" id="termText">
+      zodi4c@root:~$ <span id="termCmd">cd ./bu-sayfa</span><br>
+      <span id="termOutput">bash: boyle bir dosya veya dizin yok</span> <i class="caret"></i>
+    </p>
+    <a href="/" class="home-btn" id="homeLink">cd ~ (ana sayfa)</a>
+  </main>
+
+  <script>
+    (function () {
+      document.addEventListener('contextmenu', (e) => e.preventDefault());
+      const LANG_KEY = 'zodi4c_lang';
+      const homeLink = document.getElementById('homeLink');
+      const termCmd = document.getElementById('termCmd');
+      const termOutput = document.getElementById('termOutput');
+
+      let currentLang = 'en';
+      try {
+        const savedLang = localStorage.getItem(LANG_KEY);
+        if (savedLang === 'en' || savedLang === 'tr') {
+          currentLang = savedLang;
+        } else {
+          const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+          currentLang = browserLang.startsWith('tr') ? 'tr' : 'en';
+        }
+      } catch (_) {
+        currentLang = 'en';
+      }
+
+      const isTr = currentLang === 'tr';
+      document.documentElement.lang = currentLang;
+      if (homeLink) homeLink.textContent = isTr ? 'cd ~ (ana sayfa)' : 'cd ~ (home page)';
+      if (termCmd) termCmd.textContent = isTr ? 'cd ./bu-sayfa' : 'cd ./this-page';
+      if (termOutput) termOutput.textContent = isTr ? 'bash: boyle bir dosya veya dizin yok' : 'bash: no such file or directory';
+    })();
+  </script>
+</body>
+</html>
