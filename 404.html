@@ -6,7 +6,7 @@
   <title>404 · Z O D I 4 C</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#121318">
-  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1403455771563528252/45b51aba1249e7a47dd67075faa3e03d.png?size=128">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -120,7 +120,7 @@
     <h1>404</h1>
     <p class="term" id="termText">
       zodi4c@root:~$ <span id="termCmd">cd ./bu-sayfa</span><br>
-      <span id="termOutput">bash: boyle bir dosya veya dizin yok</span> <i class="caret"></i>
+      <span id="termOutput">bash: böyle bir dosya veya dizin yok</span> <i class="caret"></i>
     </p>
     <a href="/" class="home-btn" id="homeLink">cd ~ (ana sayfa)</a>
   </main>
@@ -150,7 +150,7 @@
       document.documentElement.lang = currentLang;
       if (homeLink) homeLink.textContent = isTr ? 'cd ~ (ana sayfa)' : 'cd ~ (home page)';
       if (termCmd) termCmd.textContent = isTr ? 'cd ./bu-sayfa' : 'cd ./this-page';
-      if (termOutput) termOutput.textContent = isTr ? 'bash: boyle bir dosya veya dizin yok' : 'bash: no such file or directory';
+      if (termOutput) termOutput.textContent = isTr ? 'bash: böyle bir dosya veya dizin yok' : 'bash: no such file or directory';
     })();
   </script>
 </body>

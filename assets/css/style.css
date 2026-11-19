@@ -4391,3 +4391,102 @@ body.site-locked .bg-preset-btn {
     align-self: center;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   TOP-LEFT LANGUAGE SWITCHER PILL & SUBTLE BRAND FOOTER
+   ══════════════════════════════════════════════════════════════════ */
+body.site-locked .lang-toggle-wrap,
+body.site-locked .brand-footer {
+  opacity: 0;
+  pointer-events: none !important;
+  transform: translateY(-10px);
+}
+
+.lang-toggle-wrap {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  z-index: 95000;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.lang-toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(10, 11, 16, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(235, 237, 245, 0.5);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lang-toggle-pill:hover {
+  background: rgba(24, 26, 38, 0.85);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+}
+
+.lang-toggle-pill .lang-opt {
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.lang-toggle-pill .lang-opt.active {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
+}
+
+.lang-toggle-pill .lang-sep {
+  opacity: 0.35;
+}
+
+.brand-footer {
+  position: fixed;
+  bottom: 10px;
+  right: 16px;
+  z-index: 50;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  opacity: 0.42;
+  transition: opacity 0.25s ease, transform 0.45s ease;
+}
+
+.brand-footer:hover {
+  opacity: 0.85;
+}
+
+.brand-footer a {
+  color: var(--text-dim);
+  text-decoration: none;
+}
+
+.brand-footer a:hover {
+  color: var(--text-pure);
+}
+
+@media (max-width: 640px) {
+  .lang-toggle-wrap {
+    top: 12px;
+    left: 12px;
+  }
+  .lang-toggle-pill {
+    padding: 5px 10px;
+    font-size: 0.68rem;
+  }
+  .brand-footer {
+    bottom: 6px;
+    right: 10px;
+    font-size: 0.62rem;
+  }
+}

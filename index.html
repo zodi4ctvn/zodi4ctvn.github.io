@@ -6,19 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Z O D I 4 C</title>
   <meta name="title" content="Z O D I 4 C">
+  <meta name="author" content="Zodi4c (zodi4ctvn)">
   <meta name="description"
     content="Personal space of Zodi4c. Discord profiles, projects, skills, constellation map and terminal.">
   <meta name="theme-color" content="#121318">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://zodi4ctvn.github.io/">
   <meta property="og:title" content="Z O D I 4 C">
-  <meta property="og:description" content="Digital presence • Takımyıldızı Projeleri • Terminal">
-  <meta property="og:image" content="https://cdn.discordapp.com/embed/avatars/0.png">
+  <meta property="og:description" content="Personal space of Zodi4c — Discord presence, projects, constellation map and interactive terminal.">
+  <meta property="og:image" content="https://zodi4ctvn.github.io/assets/img/favicon.svg">
   <link rel="canonical" href="https://zodi4ctvn.github.io/">
-  <link rel="icon" type="image/png"
-    href="https://cdn.discordapp.com/avatars/1403455771563528252/45b51aba1249e7a47dd67075faa3e03d.png?size=128">
-  <link rel="apple-touch-icon"
-    href="https://cdn.discordapp.com/avatars/1403455771563528252/45b51aba1249e7a47dd67075faa3e03d.png?size=128">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
   <link rel="manifest" href="site.webmanifest">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Z O D I 4 C">
@@ -48,10 +47,20 @@
     <div class="vignette"></div>
   </div>
   <audio id="bgAudio" src="assets/audio/music.mp3" loop preload="metadata"></audio>
-  <iframe id="ytAudioIframe" width="220" height="220" src=""
+  <iframe id="ytAudioIframe" width="220" height="220" src="about:blank" title="Background Music Player"
     style="position: fixed; left: -9999px; top: -9999px; border: none; pointer-events: none;"
     referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media">
   </iframe>
+
+  <!-- Top-Left Language Switcher Pill -->
+  <div class="lang-toggle-wrap" id="langToggleWrap">
+    <button type="button" class="lang-toggle-pill" id="langToggleBtn" title="Dili Değiştir / Switch to English"
+      aria-label="Switch Language">
+      <span class="lang-opt" data-lang-opt="tr">TR</span>
+      <span class="lang-sep">/</span>
+      <span class="lang-opt" data-lang-opt="en">EN</span>
+    </button>
+  </div>
 
   <!-- Top-Right Music Switcher Pill -->
   <div class="music-player-wrap" id="musicPlayerWrap">
@@ -138,7 +147,7 @@
         <!-- Right Sub-Card: Lanyard / Spotify Activity -->
         <div class="uc-subcard uc-subcard-activity discord-activity-pill" id="discordPill">
           <div class="uc-act-left">
-            <img class="uc-spotify-art hidden" id="ucSpotifyArt" src="" alt="Album Art">
+            <img class="uc-spotify-art hidden" id="ucSpotifyArt" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Album Art">
             <div class="uc-act-info">
               <div class="pill-activity" id="pillActivity">
                 <span class="act-state" id="actState">Connecting to Lanyard...</span>
@@ -284,21 +293,21 @@
         <div class="dc-divider"></div>
         <div class="dc-section-label">PROFILES</div>
         <div class="dc-links">
-          <a href="https://discord.com/users/1403455771563528252" class="dc-link-btn" target="_blank" rel="noopener">
+          <a href="https://discord.com/users/1403455771563528252" class="dc-link-btn" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
               <path
                 d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z" />
             </svg>
             Discord
           </a>
-          <a href="https://github.com/zodi4ctvn" class="dc-link-btn" target="_blank" rel="noopener">
+          <a href="https://github.com/zodi4ctvn" class="dc-link-btn" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
               <path fill-rule="evenodd"
                 d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
             </svg>
             GitHub
           </a>
-          <a href="https://www.youtube.com/@zodi4ctvn" class="dc-link-btn dc-link-yt" target="_blank" rel="noopener">
+          <a href="https://www.youtube.com/@zodi4ctvn" class="dc-link-btn dc-link-yt" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
               <path
                 d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -306,14 +315,14 @@
             YouTube
           </a>
           <a href="https://open.spotify.com/user/dqjrnmq9o8prs687gr3y8j2pq" class="dc-link-btn dc-link-sp"
-            target="_blank" rel="noopener">
+            target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
               <path
                 d="M12 2C6.477 2 2 6.477 2 12c0 5.524 4.477 10 10 10s10-4.476 10-10c0-5.523-4.477-10-10-10zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.435-5.308-1.76-8.793-.963-.335.077-.67-.133-.746-.468-.077-.334.132-.67.467-.746 3.808-.87 7.076-.502 9.722 1.113.294.18.387.562.207.857zm1.225-2.723c-.226.367-.707.482-1.074.256-2.69-1.654-6.79-2.133-9.97-1.167-.413.125-.85-.11-.975-.523-.125-.413.11-.85.523-.975 3.632-1.102 8.156-.569 11.24 1.335.367.226.482.707.256 1.074zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71c-.494.15-1.018-.129-1.168-.623-.15-.495.129-1.018.624-1.168 3.532-1.073 9.404-.866 13.115 1.337.445.264.59.838.327 1.282-.264.444-.838.59-1.279.328z" />
             </svg>
             Spotify
           </a>
-          <a href="https://guns.lol/zodi4c" class="dc-link-btn" target="_blank" rel="noopener">
+          <a href="https://guns.lol/zodi4c" class="dc-link-btn" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 10 10" fill="currentColor" width="13" height="13">
               <polygon points="0,1 9,5 0,9" />
             </svg>
@@ -381,7 +390,7 @@
             <span class="gh-star-pill">★ 0</span>
           </div>
           <h2 class="gh-panel-title">zodi4c-storage</h2>
-          <p class="gh-panel-desc">Lua tabanlı FiveM depolama &amp; sistem altyapısı.</p>
+          <p class="gh-panel-desc" data-fallback-repo="zodi4c-storage">Lua tabanlı FiveM depolama &amp; sistem altyapısı.</p>
         </div>
       </a>
 
@@ -394,7 +403,7 @@
             <span class="gh-star-pill">★ 0</span>
           </div>
           <h2 class="gh-panel-title">coc-bb-autoattack</h2>
-          <p class="gh-panel-desc">Python ile geliştirilmiş Clash of Clans Builder Base otomatik saldırı aracı.</p>
+          <p class="gh-panel-desc" data-fallback-repo="coc-bb-autoattack">Python ile geliştirilmiş Clash of Clans Builder Base otomatik saldırı aracı.</p>
         </div>
       </a>
 
@@ -407,7 +416,7 @@
             <span class="gh-star-pill">★ 0</span>
           </div>
           <h2 class="gh-panel-title">zodi4ctvn.github.io</h2>
-          <p class="gh-panel-desc">Lanyard Discord entegrasyonlu, interaktif terminal ve DNA parçacık ağına sahip
+          <p class="gh-panel-desc" data-fallback-repo="zodi4ctvn.github.io">Lanyard Discord entegrasyonlu, interaktif terminal ve DNA parçacık ağına sahip
             kişisel web sitesi.</p>
         </div>
       </a>
@@ -497,54 +506,11 @@
     </button>
   </div>
 
-  <!-- Custom Glassmorphic Right-Click Context Menu -->
-  <div class="custom-ctx-menu hidden" id="customCtxMenu" role="menu" aria-hidden="true">
-    <button class="ctx-item" data-ctx="copy-discord" role="menuitem">
-      <span class="ctx-icon">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      </span>
-      <span id="ctxCopyDiscord">Discord Kopyala</span>
-    </button>
-    <button class="ctx-item" data-ctx="next-track" role="menuitem">
-      <span class="ctx-icon">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-      </span>
-      <span id="ctxNextTrack">Sonraki Şarkı</span>
-    </button>
-    <button class="ctx-item" data-ctx="toggle-music" role="menuitem">
-      <span class="ctx-icon">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-      </span>
-      <span id="ctxToggleMusic">Müziği Durdur / Başlat</span>
-    </button>
-    <div class="ctx-divider"></div>
-    <button class="ctx-item" data-ctx="open-github" role="menuitem">
-      <span class="ctx-icon">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-      </span>
-      <span id="ctxOpenGithub">GitHub Projelerim</span>
-    </button>
-    <button class="ctx-item" data-ctx="open-memories" role="menuitem">
-      <span class="ctx-icon">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      </span>
-      <span id="ctxOpenMemories">Anılar</span>
-    </button>
-    <button class="ctx-item" data-ctx="toggle-terminal" role="menuitem">
-      <span class="ctx-icon">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-      </span>
-      <span id="ctxToggleTerminal">Terminal</span>
-    </button>
-    <button class="ctx-item" data-ctx="cycle-bg" role="menuitem">
-      <span class="ctx-icon">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-      </span>
-      <span id="ctxCycleBg">Arka Planı Değiştir</span>
-    </button>
-  </div>
-
   <div class="copy-toast" id="copyToast" aria-live="polite">Kopyalandı ✓</div>
+
+  <footer class="brand-footer" id="zodi4cBrandFooter">
+    <a href="https://github.com/zodi4ctvn" target="_blank" rel="noopener noreferrer">© 2026 Zodi4c</a>
+  </footer>
 
   <script src="assets/js/script.js"></script>
 </body>

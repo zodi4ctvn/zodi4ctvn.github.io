@@ -1,7 +1,49 @@
+function verifyBrandIntegrity() {
+  try {
+    const normTitle = (document.title || '').replace(/\s+/g, '').toLowerCase();
+    const authorMeta = (document.querySelector('meta[name="author"]')?.getAttribute('content') || '').toLowerCase();
+    const footerEl = document.getElementById('zodi4cBrandFooter');
+    const footerText = (footerEl?.textContent || '').toLowerCase();
+    const footerLink = footerEl?.querySelector('a[href*="github.com/zodi4ctvn"]');
+    const decodeTitle = document.getElementById('decodeTitle');
+    const decodeText = ((decodeTitle?.getAttribute('data-original') || decodeTitle?.textContent || '')).replace(/\s+/g, '').toLowerCase();
+
+    const valid =
+      normTitle.includes('zodi4c') &&
+      (authorMeta.includes('zodi4c') || authorMeta.includes('zodi4ctvn')) &&
+      decodeText.includes('zodi4c') &&
+      Boolean(footerEl && footerLink && footerText.includes('zodi4c'));
+
+    if (!valid) {
+      document.body.className = '';
+      document.body.style.cssText = 'margin:0;min-height:100vh;display:grid;place-items:center;background:#08080c;color:#f1f3f8;font-family:system-ui,-apple-system,sans-serif;overflow:auto;padding:24px;';
+      document.body.innerHTML = `
+        <div style="max-width:560px;width:100%;padding:32px;border-radius:20px;background:rgba(18,19,26,0.92);border:1px solid rgba(255,255,255,0.12);box-shadow:0 24px 64px rgba(0,0,0,0.7);text-align:center;">
+          <h1 style="margin:0 0 12px;font-size:1.35rem;letter-spacing:0.12em;">ATTRIBUTION REQUIRED / ATIF GEREKLİ</h1>
+          <p style="margin:0 0 14px;color:#b8bcc8;line-height:1.6;font-size:0.95rem;">
+            Bu site <strong>Zodi4c (zodi4ctvn)</strong> tarafından geliştirilmiştir. Lisans gereği orijinal marka ve atıf bilgilerini geri yükleyin.
+          </p>
+          <p style="margin:0 0 22px;color:#9ea3b0;line-height:1.6;font-size:0.92rem;">
+            This site was created by <strong>Zodi4c (zodi4ctvn)</strong>. Please restore original attribution and branding to continue.
+          </p>
+          <a href="https://github.com/zodi4ctvn" target="_blank" rel="noopener noreferrer"
+            style="display:inline-block;padding:10px 22px;border-radius:999px;background:#ffffff;color:#08080c;text-decoration:none;font-weight:600;font-size:0.9rem;">
+            github.com/zodi4ctvn ↗
+          </a>
+        </div>
+      `;
+      return false;
+    }
+    return true;
+  } catch (_) {
+    return true;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  if (!verifyBrandIntegrity()) return;
   document.addEventListener('selectstart', (e) => e.preventDefault());
   document.addEventListener('dragstart', (e) => e.preventDefault());
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
   initMatrixEntryCurtain();
   initDecodeTitle();
   initCustomCursor();
@@ -653,7 +695,7 @@ function initConstellationDnaCanvas() {
     if (dcModal && !dcModal.classList.contains('hidden')) {
       return;
     }
-    if (e.target.closest('a, button, input, .unified-card, .gh-edge-handle, .gh-split-drawer, .mem-edge-handle, .mem-drawer, .mem-lightbox, .music-player-wrap, .bg-preset-btn, .confirm-modal-box, .tech-modal-box, .interactive-terminal, .entry-curtain, .discord-card, .discord-card-overlay, .discord-activity-pill, #discordPill')) {
+    if (e.target.closest('a, button, input, .unified-card, .gh-edge-handle, .gh-split-drawer, .mem-edge-handle, .mem-drawer, .mem-lightbox, .music-player-wrap, .lang-toggle-wrap, .brand-footer, .bg-preset-btn, .confirm-modal-box, .tech-modal-box, .interactive-terminal, .entry-curtain, .discord-card, .discord-card-overlay, .discord-activity-pill, #discordPill')) {
       return;
     }
     const clickX = e.clientX;
@@ -1169,7 +1211,7 @@ function initInteractiveTerminal() {
       return [];
     },
     repo: () => {
-      window.open('https://github.com/zodi4ctvn/zodi4ctvn.github.io', '_blank');
+      window.open('https://github.com/zodi4ctvn/zodi4ctvn.github.io', '_blank', 'noopener,noreferrer');
       const isEn = typeof currentLang !== 'undefined' && currentLang === 'en';
       return [isEn ? 'Opening GitHub repository in a new tab...' : 'GitHub deposu yeni sekmede açılıyor...'];
     },
@@ -1527,8 +1569,8 @@ function playNextTrack() {
 
 function sendYtCommand(func) {
   const iframe = document.getElementById('ytAudioIframe');
-  if (iframe && iframe.contentWindow) {
-    iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: '' }), '*');
+  if (iframe && iframe.contentWindow && iframe.src && iframe.src.startsWith('https://www.youtube.com/')) {
+    iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: '' }), 'https://www.youtube.com');
   }
 }
 
@@ -1635,7 +1677,6 @@ function toggleBackgroundMusic() {
 function initMusicSwitcher() {
   const prevBtn = document.getElementById('mpPrevBtn');
   const nextBtn = document.getElementById('mpNextBtn');
-  const shuffleBtn = document.getElementById('mpShuffleBtn');
   const volSlider = document.getElementById('mpVolSlider');
   const progressFill = document.getElementById('mpProgressFill');
   const timeText = document.getElementById('mpTimeText');
@@ -1700,14 +1741,6 @@ function initMusicSwitcher() {
     });
   }
 
-  if (shuffleBtn) {
-    shuffleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      isShuffle = !isShuffle;
-      shuffleBtn.classList.toggle('active', isShuffle);
-    });
-  }
-
   if (dropdown) {
     dropdown.innerHTML = '';
     YT_PLAYLIST.forEach((track, idx) => {
@@ -1746,6 +1779,7 @@ window.addEventListener('keydown', (e) => {
 
   const targetTag = e.target.tagName ? e.target.tagName.toLowerCase() : '';
   if (targetTag === 'input' || targetTag === 'textarea' || e.target.isContentEditable) return;
+  if (e.target.closest && e.target.closest('button, a, [role="button"]')) return;
 
   if (e.code === 'Space' || e.key === ' ' || e.keyCode === 32) {
     e.preventDefault();
@@ -1885,10 +1919,18 @@ function initBoxes3DTilt() {
 function initUnifiedCardTabs() {
   const dcSubcard = document.getElementById('ucDiscordSubcard');
   if (dcSubcard) {
-    dcSubcard.addEventListener('click', () => {
+    const openDiscordModal = () => {
       const modal = document.getElementById('discordCardModal');
       if (modal) modal.classList.remove('hidden');
       playUiClickSound(680, 'sine', 0.05);
+    };
+    dcSubcard.addEventListener('click', openDiscordModal);
+    dcSubcard.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        openDiscordModal();
+      }
     });
   }
 }
@@ -2087,11 +2129,57 @@ function applyLanguage(lang) {
     visitorLabel.textContent = I18N[lang].visitorLabel;
   }
 
-  // 4. Nav buttons tooltips
-  const btnDiscordMain = document.querySelector('.btn-discord');
-  if (btnDiscordMain) btnDiscordMain.title = I18N[lang].navTitles.discordMain;
+  // 4. Nav buttons, Discord & Music player tooltips
+  const isTr = lang === 'tr';
+  const discordBtns = document.querySelectorAll('.btn-discord');
+  if (discordBtns[0]) discordBtns[0].title = I18N[lang].navTitles.discordMain;
+  if (discordBtns[1]) discordBtns[1].title = I18N[lang].navTitles.discordBackup;
+  const btnGithub = document.querySelector('.btn-github');
+  if (btnGithub) btnGithub.title = I18N[lang].navTitles.github;
   const btnTerminal = document.getElementById('terminalToggleBtn');
   if (btnTerminal) btnTerminal.title = I18N[lang].navTitles.terminal;
+
+  const dcSubcard = document.getElementById('ucDiscordSubcard');
+  if (dcSubcard) dcSubcard.title = isTr ? 'Discord Profil Kartını Aç' : 'Open Discord Profile Card';
+  const handleEl = document.getElementById('ucHandle');
+  if (handleEl) handleEl.title = isTr ? 'Kopyalamak için tıkla' : 'Click to copy';
+
+  const langToggleBtn = document.getElementById('langToggleBtn');
+  if (langToggleBtn) {
+    langToggleBtn.title = I18N[lang].navTitles.langToggle;
+    langToggleBtn.setAttribute('aria-label', I18N[lang].navTitles.langToggle);
+    langToggleBtn.querySelectorAll('.lang-opt').forEach((opt) => {
+      opt.classList.toggle('active', opt.getAttribute('data-lang-opt') === lang);
+    });
+  }
+
+  // Music player tooltips & aria-labels
+  const mpPrevBtn = document.getElementById('mpPrevBtn');
+  if (mpPrevBtn) {
+    mpPrevBtn.title = isTr ? 'Önceki Şarkı' : 'Previous Track';
+    mpPrevBtn.setAttribute('aria-label', mpPrevBtn.title);
+  }
+  const mpTrackBtn = document.getElementById('mpTrackBtn');
+  if (mpTrackBtn) {
+    mpTrackBtn.title = isTr ? 'Şarkı Seç' : 'Select Track';
+    mpTrackBtn.setAttribute('aria-label', isTr ? 'Şarkı Listesi' : 'Track List');
+  }
+  const mpToggleBtn = document.getElementById('mpToggleBtn');
+  if (mpToggleBtn) {
+    mpToggleBtn.title = isTr ? 'Oynat / Duraklat' : 'Play / Pause';
+    mpToggleBtn.setAttribute('aria-label', mpToggleBtn.title);
+  }
+  const mpNextBtn = document.getElementById('mpNextBtn');
+  if (mpNextBtn) {
+    mpNextBtn.title = isTr ? 'Sonraki Şarkı' : 'Next Track';
+    mpNextBtn.setAttribute('aria-label', mpNextBtn.title);
+  }
+  const mpVolWrap = document.querySelector('.mp-vol-wrap');
+  const mpVolSlider = document.getElementById('mpVolSlider');
+  if (mpVolWrap) mpVolWrap.title = isTr ? 'Ses Seviyesi' : 'Volume';
+  if (mpVolSlider) mpVolSlider.setAttribute('aria-label', isTr ? 'Ses Seviyesi' : 'Volume');
+  const mpProgressTrack = document.getElementById('mpProgressTrack');
+  if (mpProgressTrack) mpProgressTrack.title = isTr ? 'Sarmak için tıkla veya sürükle' : 'Click or drag to seek';
 
   // 5. Terminal header, hint, welcome lines & placeholder
   const termTitle = document.querySelector('.terminal-title');
@@ -2115,18 +2203,41 @@ function applyLanguage(lang) {
   const confirmProceed = document.getElementById('confirmProceedBtn');
   if (confirmProceed) confirmProceed.textContent = I18N[lang].confirmProceed;
 
-  // 8. Left-Edge GitHub Drawer Labels
-  const isTr = lang === 'tr';
+  // 8. Left-Edge GitHub & Right-Edge Memories Drawer Labels
+  const ghEdgeHandle = document.getElementById('ghEdgeHandle');
   const ghEdgeText = document.getElementById('ghEdgeText');
   const ghSplitCloseText = document.getElementById('ghSplitCloseText');
   if (ghEdgeText) ghEdgeText.textContent = isTr ? 'GitHub Projelerim' : 'GitHub Projects';
+  if (ghEdgeHandle) {
+    ghEdgeHandle.title = isTr ? 'GitHub Projelerim' : 'GitHub Projects';
+    ghEdgeHandle.setAttribute('aria-label', ghEdgeHandle.title);
+  }
   if (ghSplitCloseText) ghSplitCloseText.textContent = isTr ? 'Kapat' : 'Close';
 
+  const fallbackRepoDescs = isTr ? {
+    'zodi4c-storage': 'Lua tabanlı FiveM depolama & sistem altyapısı.',
+    'coc-bb-autoattack': 'Python ile geliştirilmiş Clash of Clans Builder Base otomatik saldırı aracı.',
+    'zodi4ctvn.github.io': 'Lanyard Discord entegrasyonlu, interaktif terminal ve DNA parçacık ağına sahip kişisel web sitesi.'
+  } : {
+    'zodi4c-storage': 'Lua-based FiveM storage & server system infrastructure.',
+    'coc-bb-autoattack': 'Python-powered Clash of Clans Builder Base auto-attack automation tool.',
+    'zodi4ctvn.github.io': 'Personal portfolio site with Lanyard Discord presence, interactive terminal, and DNA particle network.'
+  };
+  document.querySelectorAll('[data-fallback-repo]').forEach((el) => {
+    const key = el.getAttribute('data-fallback-repo');
+    if (fallbackRepoDescs[key]) el.textContent = fallbackRepoDescs[key];
+  });
+
+  const memEdgeHandle = document.getElementById('memEdgeHandle');
   const memEdgeText = document.getElementById('memEdgeText');
   const memCloseText = document.getElementById('memCloseText');
   const memTitle = document.getElementById('memTitle');
   const memSubtitle = document.getElementById('memSubtitle');
   if (memEdgeText) memEdgeText.textContent = isTr ? 'Anılar' : 'Memories';
+  if (memEdgeHandle) {
+    memEdgeHandle.title = isTr ? 'Anılar' : 'Memories';
+    memEdgeHandle.setAttribute('aria-label', memEdgeHandle.title);
+  }
   if (memCloseText) memCloseText.textContent = isTr ? 'Kapat' : 'Close';
   if (memTitle) memTitle.textContent = isTr ? 'Anılar' : 'Memories';
   if (memSubtitle) memSubtitle.textContent = isTr ? 'Zodi4c · Fotoğraf ve video arşivi' : 'Zodi4c · Photo & video archive';
@@ -2153,7 +2264,12 @@ function applyLanguage(lang) {
     if (el) el.textContent = txt;
   });
 
-  // 8. Re-render typewriter phrases for new language
+  // 9. Refresh Memories drawer UI if mounted
+  if (typeof window._rerenderMemories === 'function') {
+    window._rerenderMemories();
+  }
+
+  // 10. Re-render typewriter phrases for new language
   if (typeof restartTypewriterBio === 'function') {
     restartTypewriterBio();
   }
@@ -2173,6 +2289,15 @@ function initLanguageSystem() {
     currentLang = 'en';
   }
 
+  const langToggleBtn = document.getElementById('langToggleBtn');
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyLanguage(currentLang === 'tr' ? 'en' : 'tr');
+      playUiClickSound(640, 'sine', 0.05);
+    });
+  }
+
   applyLanguage(currentLang);
 }
 
@@ -2181,7 +2306,7 @@ function initStoredTheme() {
   try {
     const saved = localStorage.getItem('zodi4c_theme');
     if (saved && ['matrix', 'bloodmoon', 'synthwave'].includes(saved)) {
-      document.body.classList.add(`theme-matrix` === `theme-${saved}` ? `theme-${saved}` : `theme-${saved}`);
+      document.body.classList.add(`theme-${saved}`);
     }
   } catch (_) { }
 }
@@ -2846,8 +2971,8 @@ function initGithubSplitDrawer() {
 
 /* ── Right-Edge Handle & Memories Drawer (Categories + Media) ─── */
 const MEMORIES_CATEGORIES = [
-  { id: 'legal-departman', label: 'Legal Departman' },
-  { id: 'profiles', label: 'Kullandığım Profiller' }
+  { id: 'legal-departman', label: 'Legal Departman', label_en: 'Legal Department' },
+  { id: 'profiles', label: 'Kullandığım Profiller', label_en: 'My Profiles' }
 ];
 
 // Geçmiş Discord profil fotoğrafları (GIF destekli).
@@ -2886,6 +3011,8 @@ const MEMORIES_PROFILES = [
 const LIVE_PROFILE_NOTE = '';
 
 function getLiveDiscordAvatarItem() {
+  const isEn = typeof currentLang !== 'undefined' && currentLang === 'en';
+  const liveTitleText = isEn ? 'Latest' : 'En Güncel';
   const data = window._lanyardCache || window._lanyardRestData;
   const user = data && data.discord_user;
   if (user && user.id && user.avatar) {
@@ -2897,7 +3024,7 @@ function getLiveDiscordAvatarItem() {
       isLive: true,
       isGif,
       src: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=1024`,
-      title: 'En Güncel',
+      title: liveTitleText,
       handle: user.username ? `@${user.username}` : '@zodi4ctvn',
       note: LIVE_PROFILE_NOTE
     };
@@ -2910,13 +3037,14 @@ function getLiveDiscordAvatarItem() {
     isLive: true,
     isGif: fallbackSrc.includes('.gif'),
     src: fallbackSrc,
-    title: 'En Güncel',
+    title: liveTitleText,
     handle: '@zodi4ctvn',
     note: LIVE_PROFILE_NOTE
   };
 }
 
 async function downloadProfileMedia(src, filename) {
+  const isEn = typeof currentLang !== 'undefined' && currentLang === 'en';
   try {
     const res = await fetch(src);
     if (!res.ok) throw new Error('fetch failed');
@@ -2930,7 +3058,7 @@ async function downloadProfileMedia(src, filename) {
     a.remove();
     setTimeout(() => URL.revokeObjectURL(blobUrl), 1500);
     if (typeof showCopyToast === 'function') {
-      showCopyToast(`İndiriliyor: ${filename}`);
+      showCopyToast(isEn ? `Downloading: ${filename}` : `İndiriliyor: ${filename}`);
     }
   } catch {
     const a = document.createElement('a');
@@ -2994,6 +3122,7 @@ function initMemoriesDrawer() {
 
   function renderProfileLightboxMeta(item) {
     if (!lbMeta) return;
+    const isEn = typeof currentLang !== 'undefined' && currentLang === 'en';
     lbMeta.innerHTML = '';
     lbMeta.classList.remove('hidden');
 
@@ -3006,7 +3135,7 @@ function initMemoriesDrawer() {
       noteHeader.className = 'mem-lb-note-header';
       const noteLabel = document.createElement('span');
       noteLabel.className = 'mem-lb-note-label';
-      noteLabel.textContent = 'Profil Özel Not';
+      noteLabel.textContent = isEn ? 'Profile Note' : 'Profil Özel Not';
       noteHeader.appendChild(noteLabel);
       noteCard.appendChild(noteHeader);
 
@@ -3025,7 +3154,7 @@ function initMemoriesDrawer() {
     dlBtn.className = 'mem-lb-download-btn';
     dlBtn.innerHTML = `
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      <span>Profili İndir</span>
+      <span>${isEn ? 'Download Profile' : 'Profili İndir'}</span>
     `;
     const ext = item.isGif ? 'gif' : (item.src && item.src.toLowerCase().endsWith('.jpg') ? 'jpg' : 'png');
     const fileBase = item.isLive ? 'zodi4c-en-guncel-pp' : (item.id || 'profil');
@@ -3088,10 +3217,15 @@ function initMemoriesDrawer() {
 
   function renderProfilesView() {
     if (!gridEl) return;
+    const isEn = typeof currentLang !== 'undefined' && currentLang === 'en';
     gridEl.classList.add('mem-grid--profiles');
 
     const liveItem = getLiveDiscordAvatarItem();
-    const archiveItems = MEMORIES_PROFILES.map((p) => ({ ...p, isProfile: true }));
+    const archiveItems = MEMORIES_PROFILES.map((p, idx) => ({
+      ...p,
+      title: isEn ? `Profile #${idx + 1}` : p.title,
+      isProfile: true
+    }));
     const allProfileItems = [liveItem, ...archiveItems];
 
     // 1. En Güncel Live Discord PP Hero
@@ -3102,7 +3236,7 @@ function initMemoriesDrawer() {
     liveAvatarWrap.className = 'mem-live-avatar-wrap';
     const liveImg = document.createElement('img');
     liveImg.src = liveItem.src;
-    liveImg.alt = 'En Güncel Discord Profili';
+    liveImg.alt = isEn ? 'Latest Discord Profile' : 'En Güncel Discord Profili';
     liveImg.decoding = 'async';
     liveAvatarWrap.appendChild(liveImg);
     if (liveItem.isGif) {
@@ -3117,11 +3251,13 @@ function initMemoriesDrawer() {
 
     const liveBadge = document.createElement('span');
     liveBadge.className = 'mem-live-badge';
-    liveBadge.innerHTML = '<span class="mem-live-dot"></span> EN GÜNCEL · ANLIK DISCORD PP';
+    liveBadge.innerHTML = isEn
+      ? '<span class="mem-live-dot"></span> LATEST · LIVE DISCORD AVATAR'
+      : '<span class="mem-live-dot"></span> EN GÜNCEL · ANLIK DISCORD PP';
 
     const liveTitle = document.createElement('h3');
     liveTitle.className = 'mem-live-title';
-    liveTitle.textContent = `En Güncel (${liveItem.handle})`;
+    liveTitle.textContent = isEn ? `Latest (${liveItem.handle})` : `En Güncel (${liveItem.handle})`;
 
     const liveNote = (liveItem.note || '').trim();
     const liveActions = document.createElement('div');
@@ -3130,7 +3266,9 @@ function initMemoriesDrawer() {
     const inspectBtn = document.createElement('button');
     inspectBtn.type = 'button';
     inspectBtn.className = 'mem-profile-btn mem-profile-btn--ghost';
-    inspectBtn.textContent = liveNote ? 'İncele / Notu Gör' : 'İncele';
+    inspectBtn.textContent = liveNote
+      ? (isEn ? 'Inspect / View Note' : 'İncele / Notu Gör')
+      : (isEn ? 'Inspect' : 'İncele');
     inspectBtn.addEventListener('click', () => openLightbox(liveItem, allProfileItems, 0));
 
     const dlLiveBtn = document.createElement('button');
@@ -3138,7 +3276,7 @@ function initMemoriesDrawer() {
     dlLiveBtn.className = 'mem-profile-btn mem-profile-btn--primary';
     dlLiveBtn.innerHTML = `
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      <span>İndir</span>
+      <span>${isEn ? 'Download' : 'İndir'}</span>
     `;
     dlLiveBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -3165,7 +3303,9 @@ function initMemoriesDrawer() {
     // 2. Section Divider
     const divider = document.createElement('div');
     divider.className = 'mem-profiles-divider';
-    divider.innerHTML = `<span>Geçmiş Discord Profilleri</span><span class="mem-profiles-count">${archiveItems.length} Profil</span>`;
+    divider.innerHTML = isEn
+      ? `<span>Past Discord Profiles</span><span class="mem-profiles-count">${archiveItems.length} Profiles</span>`
+      : `<span>Geçmiş Discord Profilleri</span><span class="mem-profiles-count">${archiveItems.length} Profil</span>`;
     gridEl.appendChild(divider);
 
     // 3. Circular Profiles Grid
@@ -3195,8 +3335,8 @@ function initMemoriesDrawer() {
       const quickDl = document.createElement('button');
       quickDl.type = 'button';
       quickDl.className = 'mem-profile-quick-dl';
-      quickDl.title = `${item.title} İndir`;
-      quickDl.setAttribute('aria-label', `${item.title} İndir`);
+      quickDl.title = isEn ? `Download ${item.title}` : `${item.title} İndir`;
+      quickDl.setAttribute('aria-label', quickDl.title);
       quickDl.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
       quickDl.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -3231,6 +3371,7 @@ function initMemoriesDrawer() {
 
   function renderSectionPicker() {
     if (!gridEl) return;
+    const isEn = typeof currentLang !== 'undefined' && currentLang === 'en';
     gridEl.classList.add('mem-grid--picker');
 
     const legalItems = MEMORIES_MEDIA.filter((m) => m.category === 'legal-departman');
@@ -3242,18 +3383,18 @@ function initMemoriesDrawer() {
       {
         id: 'legal-departman',
         num: '01',
-        title: 'Legal Departman',
-        stats: `${legalVideos} Video · ${legalPhotos} Fotoğraf`,
-        desc: 'Operasyon klipleri ve ekip fotoğraf arşivi.',
+        title: isEn ? 'Legal Department' : 'Legal Departman',
+        stats: isEn ? `${legalVideos} Video · ${legalPhotos} Photos` : `${legalVideos} Video · ${legalPhotos} Fotoğraf`,
+        desc: isEn ? 'Operation clips and team photo archive.' : 'Operasyon klipleri ve ekip fotoğraf arşivi.',
         previewSrc: 'assets/memories/legal-departman/legal-02.png',
         isCircular: false
       },
       {
         id: 'profiles',
         num: '02',
-        title: 'Kullandığım Profiller',
-        stats: `En Güncel + ${MEMORIES_PROFILES.length} Profil`,
-        desc: 'Anlık Discord profil fotoğrafı ve geçmiş avatar arşivi.',
+        title: isEn ? 'My Profiles' : 'Kullandığım Profiller',
+        stats: isEn ? `Latest + ${MEMORIES_PROFILES.length} Profiles` : `En Güncel + ${MEMORIES_PROFILES.length} Profil`,
+        desc: isEn ? 'Live Discord avatar and past profile archive.' : 'Anlık Discord profil fotoğrafı ve geçmiş avatar arşivi.',
         previewSrc: liveAvatar.src,
         isCircular: true
       }
@@ -3293,7 +3434,7 @@ function initMemoriesDrawer() {
 
       const ctaEl = document.createElement('span');
       ctaEl.className = 'mem-section-cta';
-      ctaEl.textContent = 'Bölümü Aç →';
+      ctaEl.textContent = isEn ? 'Open Section →' : 'Bölümü Aç →';
 
       body.append(statsEl, titleEl, descEl, ctaEl);
       card.append(bgNum, previewWrap, body);
@@ -3306,11 +3447,12 @@ function initMemoriesDrawer() {
   }
 
   function renderMemories() {
+    const isEn = typeof currentLang !== 'undefined' && currentLang === 'en';
     const subtitleEl = document.getElementById('memSubtitle');
     if (subtitleEl) {
       subtitleEl.textContent = activeCat === null
-        ? 'Zodi4c · Bir bölüm seç'
-        : 'Zodi4c · Fotoğraf ve video arşivi';
+        ? (isEn ? 'Zodi4c · Choose a section' : 'Zodi4c · Bir bölüm seç')
+        : (isEn ? 'Zodi4c · Photo & video archive' : 'Zodi4c · Fotoğraf ve video arşivi');
     }
 
     if (catsEl) {
@@ -3318,7 +3460,7 @@ function initMemoriesDrawer() {
       if (activeCat !== null) {
         const backBtn = document.createElement('button');
         backBtn.className = 'mem-cat-btn mem-cat-back';
-        backBtn.textContent = '← Bölümler';
+        backBtn.textContent = isEn ? '← Sections' : '← Bölümler';
         backBtn.addEventListener('click', () => {
           activeCat = null;
           renderMemories();
@@ -3328,7 +3470,7 @@ function initMemoriesDrawer() {
         MEMORIES_CATEGORIES.forEach((cat) => {
           const btn = document.createElement('button');
           btn.className = `mem-cat-btn${cat.id === activeCat ? ' active' : ''}`;
-          btn.textContent = cat.label;
+          btn.textContent = isEn ? (cat.label_en || cat.label) : cat.label;
           btn.addEventListener('click', () => {
             activeCat = cat.id;
             renderMemories();
@@ -3362,7 +3504,9 @@ function initMemoriesDrawer() {
     if (items.length === 0) {
       const empty = document.createElement('div');
       empty.className = 'mem-empty-box';
-      empty.innerHTML = `Henüz bu kategoride medya yok.<br>Dosyaları <code>assets/memories/${activeCat}/</code> klasörüne koyup <code>MEMORIES_MEDIA</code> listesine ekleyebilirsin.`;
+      empty.innerHTML = isEn
+        ? `No media in this category yet.<br>Place files inside <code>assets/memories/${activeCat}/</code> and add them to <code>MEMORIES_MEDIA</code>.`
+        : `Henüz bu kategoride medya yok.<br>Dosyaları <code>assets/memories/${activeCat}/</code> klasörüne koyup <code>MEMORIES_MEDIA</code> listesine ekleyebilirsin.`;
       gridEl.appendChild(empty);
       return;
     }
@@ -3379,10 +3523,10 @@ function initMemoriesDrawer() {
           <div class="mem-spot-play">▶</div>
         </div>
         <div class="mem-spot-body">
-          <span class="mem-spot-badge">Featured Clip</span>
+          <span class="mem-spot-badge">${isEn ? 'Featured Clip' : 'Öne Çıkan Klip'}</span>
           <h3 class="mem-spot-title"></h3>
-          <p class="mem-spot-meta">Legal Departman · Video Arşivi</p>
-          <span class="mem-spot-cta">Tam Ekran İzle ▶</span>
+          <p class="mem-spot-meta">${isEn ? 'Legal Department · Video Archive' : 'Legal Departman · Video Arşivi'}</p>
+          <span class="mem-spot-cta">${isEn ? 'Watch Fullscreen ▶' : 'Tam Ekran İzle ▶'}</span>
         </div>
       `;
       spotlightEl.querySelector('.mem-spot-title').textContent = mainVid.title || 'Video';
@@ -3432,6 +3576,7 @@ function initMemoriesDrawer() {
     drawer.setAttribute('aria-hidden', 'false');
   }
   window._openMemDrawer = openMem;
+  window._rerenderMemories = renderMemories;
   window._refreshMemoriesIfProfiles = () => {
     if (drawer.classList.contains('open') && (activeCat === 'profiles' || activeCat === null)) {
       renderMemories();
@@ -3501,7 +3646,7 @@ function copyDiscordHandle() {
 function initDiscordHandleCopy() {
   const handleEl = document.getElementById('ucHandle');
   if (!handleEl) return;
-  handleEl.title = 'Kopyalamak için tıkla';
+  handleEl.title = (typeof currentLang !== 'undefined' && currentLang === 'en') ? 'Click to copy' : 'Kopyalamak için tıkla';
   handleEl.addEventListener('click', (e) => {
     e.stopPropagation();
     copyDiscordHandle();
