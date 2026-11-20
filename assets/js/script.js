@@ -762,6 +762,8 @@ function initLanyardActivity() {
       avatarEl.src = avatarSrc;
       const miniAv = document.getElementById('ucMiniAvatar');
       if (miniAv) miniAv.src = avatarSrc;
+      const entryAv = document.getElementById('entryAvatar');
+      if (entryAv) entryAv.src = avatarSrc;
       const fav = document.querySelector('link[rel="icon"]');
       if (fav) fav.href = `https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png?size=128`;
     }
@@ -793,6 +795,8 @@ function initLanyardActivity() {
     statusDot.className = `user-status-dot ${status}`;
     const miniStatus = document.getElementById('ucMiniStatus');
     if (miniStatus) miniStatus.className = `user-status-dot ${status}`;
+    const entryStatus = document.getElementById('entryStatusDot');
+    if (entryStatus) entryStatus.className = `user-status-dot ${status}`;
     const dcSubcard = document.getElementById('ucDiscordSubcard');
     if (dcSubcard) {
       dcSubcard.classList.remove('status-online', 'status-dnd', 'status-idle', 'status-offline');
@@ -1574,12 +1578,24 @@ function sendYtCommand(func) {
   }
 }
 
+const MP_PLAY_SVG = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+const MP_PAUSE_SVG = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+
 function updateMusicPlayerUI() {
   const track = YT_PLAYLIST[currentTrackIndex] || YT_PLAYLIST[0];
   const nameEl = document.getElementById('mpTrackName');
+  const artistEl = document.getElementById('mpTrackArtist');
+  const coverEl = document.getElementById('mpCover');
   const toggleBtn = document.getElementById('mpToggleBtn');
   if (nameEl) nameEl.textContent = track.title;
-  if (toggleBtn) toggleBtn.textContent = isMusicPlaying ? '❚❚' : '▶';
+  if (artistEl) artistEl.textContent = track.artist || '';
+  if (coverEl) {
+    const coverSrc = track.id
+      ? `https://i.ytimg.com/vi/${track.id}/hqdefault.jpg`
+      : 'assets/img/favicon.svg';
+    if (coverEl.getAttribute('src') !== coverSrc) coverEl.src = coverSrc;
+  }
+  if (toggleBtn) toggleBtn.innerHTML = isMusicPlaying ? MP_PAUSE_SVG : MP_PLAY_SVG;
 
   const items = document.querySelectorAll('.music-drop-item');
   items.forEach((btn, idx) => {
@@ -1679,9 +1695,11 @@ function initMusicSwitcher() {
   const nextBtn = document.getElementById('mpNextBtn');
   const volSlider = document.getElementById('mpVolSlider');
   const progressFill = document.getElementById('mpProgressFill');
-  const timeText = document.getElementById('mpTimeText');
+  const timeCur = document.getElementById('mpTimeCur');
+  const timeDur = document.getElementById('mpTimeDur');
   const toggleBtn = document.getElementById('mpToggleBtn');
   const trackBtn = document.getElementById('mpTrackBtn');
+  const coverBtn = document.getElementById('mpCoverBtn');
   const dropdown = document.getElementById('musicDropdown');
 
   // Preload first local audio file metadata so it starts immediately on click-to-enter
@@ -1694,16 +1712,17 @@ function initMusicSwitcher() {
       bgAudio.src = YT_PLAYLIST[0].src;
       bgAudio.load();
     }
-    bgAudio.addEventListener('timeupdate', () => {
+    const syncClock = () => {
       const cur = bgAudio.currentTime || 0;
       const dur = bgAudio.duration || 0;
       if (progressFill && dur > 0) {
         progressFill.style.width = `${Math.min(100, (cur / dur) * 100).toFixed(1)}%`;
       }
-      if (timeText) {
-        timeText.textContent = `${formatAudioClock(cur)} / ${formatAudioClock(dur)}`;
-      }
-    });
+      if (timeCur) timeCur.textContent = formatAudioClock(cur);
+      if (timeDur) timeDur.textContent = formatAudioClock(dur);
+    };
+    bgAudio.addEventListener('timeupdate', syncClock);
+    bgAudio.addEventListener('loadedmetadata', syncClock);
     bgAudio.addEventListener('ended', () => {
       playNextTrack();
     });
@@ -1759,11 +1778,13 @@ function initMusicSwitcher() {
   if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); playTrackAt(currentTrackIndex - 1); });
   if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); playNextTrack(); });
   if (toggleBtn) toggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleBackgroundMusic(); });
-  if (trackBtn && dropdown) {
-    trackBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle('hidden');
-    });
+  const togglePlaylist = (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('hidden');
+  };
+  if (trackBtn && dropdown) trackBtn.addEventListener('click', togglePlaylist);
+  if (coverBtn && dropdown) coverBtn.addEventListener('click', togglePlaylist);
+  if (dropdown) {
     document.addEventListener('click', (e) => {
       if (!e.target.closest('#musicPlayerWrap')) {
         dropdown.classList.add('hidden');
@@ -2277,27 +2298,7 @@ function applyLanguage(lang) {
 
 function initLanguageSystem() {
   // Öncelik Sırası: Kayıtlı tercih (localStorage) → Tarayıcı dili (navigator.language) → Varsayılan (EN)
-  try {
-    const saved = localStorage.getItem('zodi4c_lang');
-    if (saved === 'en' || saved === 'tr') {
-      currentLang = saved;
-    } else {
-      const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      currentLang = browserLang.startsWith('tr') ? 'tr' : 'en';
-    }
-  } catch (_) {
-    currentLang = 'en';
-  }
-
-  const langToggleBtn = document.getElementById('langToggleBtn');
-  if (langToggleBtn) {
-    langToggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      applyLanguage(currentLang === 'tr' ? 'en' : 'tr');
-      playUiClickSound(640, 'sine', 0.05);
-    });
-  }
-
+  currentLang = 'tr';
   applyLanguage(currentLang);
 }
 

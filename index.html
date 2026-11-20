@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Syncopate:wght@700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Syncopate:wght@700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -32,7 +32,12 @@
 <body class="site-locked">
   <div class="entry-curtain" id="entryCurtain" role="button" tabindex="0">
     <div class="entry-minimal-wrap">
-      <span class="entry-prompt">Zodi4c</span>
+      <div class="entry-avatar-wrap">
+        <img id="entryAvatar" class="entry-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Zodi4c Avatar">
+        <span class="user-status-dot offline" id="entryStatusDot"></span>
+      </div>
+      <span class="entry-prompt">ZODI4C</span>
+      <span class="entry-hint">&bull; CLICK TO ENTER &bull;</span>
     </div>
   </div>
   <!-- Smooth Cinematic Theme Switch Curtain -->
@@ -52,43 +57,55 @@
     referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media">
   </iframe>
 
-  <!-- Top-Left Language Switcher Pill -->
-  <div class="lang-toggle-wrap" id="langToggleWrap">
-    <button type="button" class="lang-toggle-pill" id="langToggleBtn" title="Dili Değiştir / Switch to English"
-      aria-label="Switch Language">
-      <span class="lang-opt" data-lang-opt="tr">TR</span>
-      <span class="lang-sep">/</span>
-      <span class="lang-opt" data-lang-opt="en">EN</span>
-    </button>
-  </div>
-
-  <!-- Top-Right Music Switcher Pill -->
+  <!-- Bottom-Center Floating Music Dock -->
   <div class="music-player-wrap" id="musicPlayerWrap">
-    <div class="music-player-pill" id="musicPlayerPill">
-      <button class="mp-btn mp-prev" id="mpPrevBtn" title="Önceki Şarkı" aria-label="Önceki Şarkı">‹</button>
-      <button class="mp-track-btn" id="mpTrackBtn" title="Şarkı Seç" aria-label="Şarkı Listesi">
-        <span class="mp-eq-icon" id="mpEqIcon">♪</span>
-        <span class="mp-track-name" id="mpTrackName">Jilet Yarası</span>
-      </button>
-      <button class="mp-btn mp-toggle" id="mpToggleBtn" title="Oynat / Duraklat"
-        aria-label="Oynat veya Duraklat">❚❚</button>
-      <button class="mp-btn mp-next" id="mpNextBtn" title="Sonraki Şarkı" aria-label="Sonraki Şarkı">›</button>
-      <div class="mp-vol-wrap" title="Ses Seviyesi">
-        <input type="range" id="mpVolSlider" class="mp-vol-slider" min="0" max="100" value="25"
-          aria-label="Ses Seviyesi">
-      </div>
-    </div>
-    <div class="mp-progress-row" id="mpProgressWrap">
-      <div class="mp-progress-track" id="mpProgressTrack" title="Sarmak için tıkla veya sürükle">
-        <div class="mp-progress-fill" id="mpProgressFill"></div>
-      </div>
-      <span class="mp-time-text" id="mpTimeText">0:00 / 0:00</span>
-    </div>
     <div class="now-playing-toast" id="nowPlayingToast" aria-live="polite">
       <span class="np-icon">♪</span>
       <span class="np-text" id="npToastText"></span>
     </div>
     <div class="music-dropdown hidden" id="musicDropdown"></div>
+    <div class="music-player-pill" id="musicPlayerPill">
+      <button type="button" class="mp-cover-btn" id="mpCoverBtn" title="Şarkı Listesi" aria-label="Şarkı Listesi">
+        <img id="mpCover" class="mp-cover" src="https://i.ytimg.com/vi/gB7au6C0X8E/hqdefault.jpg" alt="Kapak">
+      </button>
+      <div class="mp-info-col">
+        <button type="button" class="mp-track-btn" id="mpTrackBtn" title="Şarkı Seç" aria-label="Şarkı Listesi">
+          <span class="mp-track-name" id="mpTrackName">Jilet Yarası</span>
+          <span class="mp-track-artist" id="mpTrackArtist">WUHA!</span>
+        </button>
+        <div class="mp-progress-row" id="mpProgressWrap">
+          <span class="mp-time-text" id="mpTimeCur">0:00</span>
+          <div class="mp-progress-track" id="mpProgressTrack" title="Sarmak için tıkla veya sürükle">
+            <div class="mp-progress-fill" id="mpProgressFill"></div>
+          </div>
+          <span class="mp-time-text" id="mpTimeDur">0:00</span>
+        </div>
+      </div>
+      <div class="mp-controls">
+        <button type="button" class="mp-btn mp-prev" id="mpPrevBtn" title="Önceki Şarkı" aria-label="Önceki Şarkı">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+          </svg>
+        </button>
+        <button type="button" class="mp-btn mp-toggle" id="mpToggleBtn" title="Oynat / Duraklat" aria-label="Oynat veya Duraklat">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+            <path d="M6 5h4v14H6zm8 0h4v14h-4z" />
+          </svg>
+        </button>
+        <button type="button" class="mp-btn mp-next" id="mpNextBtn" title="Sonraki Şarkı" aria-label="Sonraki Şarkı">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z" />
+          </svg>
+        </button>
+      </div>
+      <div class="mp-vol-wrap" title="Ses Seviyesi">
+        <svg class="mp-vol-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <input type="range" id="mpVolSlider" class="mp-vol-slider" min="0" max="100" value="25" aria-label="Ses Seviyesi">
+      </div>
+    </div>
   </div>
 
   <main class="scene-center">
@@ -373,6 +390,12 @@
       <path fill-rule="evenodd" clip-rule="evenodd"
         d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
     </svg>
+    <span class="edge-live-pointer edge-live-left" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="11 18 5 12 11 6"></polyline>
+      </svg>
+    </span>
   </button>
 
   <!-- Fullscreen 2-Way Split Project Selection Drawer -->
@@ -433,6 +456,12 @@
     </svg>
     <span class="mem-edge-text" id="memEdgeText">Anılar</span>
     <span class="mem-edge-arrow">‹</span>
+    <span class="edge-live-pointer edge-live-right" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="13 6 19 12 13 18"></polyline>
+      </svg>
+    </span>
   </button>
 
   <!-- Fullscreen Right Drawer: Anılar -->
